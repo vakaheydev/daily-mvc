@@ -1,5 +1,6 @@
-package com.vaka.daily.service;
+package com.vaka.daily.service.admin;
 
+import com.vaka.daily.service.AbstractService;
 import com.vaka.daily_client.client.CommonClient;
 import com.vaka.daily_client.client.blocked.UserClient;
 import com.vaka.daily_client.model.User;

@@ -1,5 +1,6 @@
-package com.vaka.daily.service;
+package com.vaka.daily.service.admin;
 
+import com.vaka.daily.service.CommonService;
 import com.vaka.daily_client.model.User;
 import org.springframework.stereotype.Service;
 

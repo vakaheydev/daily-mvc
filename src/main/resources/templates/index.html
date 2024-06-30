@@ -1,44 +1,35 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>User List</title>
-    <!-- Подключение Bootstrap CSS -->
-    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Vaka Daily</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #000;
+            color: #fff;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0;
+        }
+        .center-content {
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+        }
+    </style>
 </head>
 <body>
-<div class="container mt-5">
-    <h1 class="mb-4">User List</h1>
-    <table class="table table-dark table-striped table-bordered">
-<!--        <thead class="thead-dark">-->
-        <tr>
-            <th>ID</th>
-            <th>Login</th>
-            <th>First Name</th>
-            <th>Second Name</th>
-            <th>Patronymic</th>
-            <th>User type</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr th:each="user : ${users}">
-            <td>
-                <a th:href="@{/admin/user/{id}(id=${user.id})}" class="text-decoration-none">
-                    <p th:text="${user.id}"></p>
-                </a>
-            </td>
-            <td th:text="${user.login}"></td>
-            <td th:text="${user.firstName}"></td>
-            <td th:text="${user.secondName}"></td>
-            <td th:text="${user.patronymic}"></td>
-            <td th:text="${user.userType.name}"></td>
-        </tr>
-        </tbody>
-    </table>
+<div class="center-content">
+    <h1 class="h1">Vaka Daily</h1>
+    <a href="/start" class="btn btn-primary">Start</a>
+    <a href="/admin" class="btn btn-primary">Admin</a>
 </div>
-<!-- Подключение Bootstrap JS и jQuery -->
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>

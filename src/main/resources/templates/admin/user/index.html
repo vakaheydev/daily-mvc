@@ -18,11 +18,10 @@
             <th>Second Name</th>
             <th>Patronymic</th>
             <th>User type</th>
-            <th>Schedules</th>
         </tr>
         </thead>
         <tbody>
-        <tr>
+        <tr th:each="user : ${users}">
             <td>
                 <a th:href="@{/admin/user/{id}(id=${user.id})}" class="text-decoration-none">
                     <p th:text="${user.id}"></p>
@@ -33,10 +32,10 @@
             <td th:text="${user.secondName}"></td>
             <td th:text="${user.patronymic}"></td>
             <td th:text="${user.userType.name}"></td>
-            <td th:text="${user.schedules}"></td>
         </tr>
         </tbody>
     </table>
+    <a href="javascript:history.back()" class="btn btn-primary">Back</a>
 </div>
 <!-- Подключение Bootstrap JS и jQuery -->
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
