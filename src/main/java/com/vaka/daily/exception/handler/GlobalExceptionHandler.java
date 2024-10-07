@@ -5,6 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpStatus;
 import org.springframework.ui.Model;
+import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -39,6 +40,16 @@ public class GlobalExceptionHandler {
     public String handle(ServerIsNotAliveException ex, Model model) {
         model.addAttribute("errorMessage", ex.getMessage());
         return "error/serverUnavailable";
+    }
+
+    @ResponseStatus(HttpStatus.METHOD_NOT_ALLOWED)
+    @ExceptionHandler(HttpRequestMethodNotSupportedException.class)
+    public String handle(HttpRequestMethodNotSupportedException ex, Model model) {
+        log.error("Incorrect HTTP method: {}", ex.getMessage());
+        model.addAttribute("errorMsg", "Method not allowed: " + ex.getMethod());
+        model.addAttribute("errorName", "HttpRequestMethodNotSupportedException");
+
+        return "error/defaultError";
     }
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     @ExceptionHandler(Exception.class)

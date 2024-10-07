@@ -35,13 +35,23 @@ public class AuthorizationController {
         Cookie usernameCookie = new Cookie("username", username);
         usernameCookie.setPath("/");
         usernameCookie.setHttpOnly(true);
-        usernameCookie.setMaxAge(5);
+        usernameCookie.setMaxAge(3000);
 
         response.addCookie(usernameCookie);
 
-        User user = userService.getByUniqueName(username);
-        log.info(user.toString());
-
         return "redirect:/start";
+    }
+
+    @PostMapping("/logout")
+    public String postLogout(HttpServletResponse response) {
+        Cookie usernameCookie = new Cookie("username", null);
+        usernameCookie.setPath("/");
+        usernameCookie.setHttpOnly(true);
+        usernameCookie.setMaxAge(0);
+        usernameCookie.setAttribute("expires", "Thu, 01 Jan 1970 00:00:00 GMT");
+
+        response.addCookie(usernameCookie);
+
+        return "index";
     }
 }

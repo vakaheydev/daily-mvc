@@ -23,10 +23,10 @@ public class SimpleAuthorizationService implements AuthorizationService {
         }
         User user = null;
 
-//        try {
+        try {
             user = userClient.getByUniqueName(userDTO.getLogin());
-//        } catch (UserNotFoundException ignored) {
-//        }
+        } catch (UserNotFoundException ignored) {
+        }
 
         return user != null;
     }
