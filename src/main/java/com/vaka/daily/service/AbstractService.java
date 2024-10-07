@@ -1,11 +1,12 @@
 package com.vaka.daily.service;
 
-import com.vaka.daily_client.client.CommonClient;
+import com.vaka.dailyClient.client.Client;
 
 import java.util.List;
 
 /**
  * Abstract service with common CRUD functionality for entity of type {@code T}.
+ *
  * @param <T> entity type
  */
 public abstract class AbstractService<T> implements CommonService<T> {
@@ -44,5 +45,5 @@ public abstract class AbstractService<T> implements CommonService<T> {
         return getClient().isServerAlive();
     }
 
-    public abstract CommonClient<T> getClient();
+    public abstract Client<T> getClient();
 }
