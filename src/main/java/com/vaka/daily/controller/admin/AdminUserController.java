@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 import java.beans.PropertyEditorSupport;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.List;
 
 @Slf4j
@@ -33,8 +34,9 @@ public class AdminUserController {
     }
 
     @GetMapping
-    public String getHome(Model model) {
+    public String get(Model model) {
         List<User> users = userService.getAll();
+        users.sort(Comparator.comparingInt(User::getId));
 
         model.addAttribute("users", users);
         return "admin/user/index";
@@ -74,43 +76,5 @@ public class AdminUserController {
     private List<String> getUserTypeNames() {
         List<UserType> userTypes = userTypeService.getAll();
         return userTypes.stream().map(UserType::getName).map(StringUtils::capitalize).toList();
-    }
-
-    @InitBinder
-    protected void initBinder(WebDataBinder binder) {
-        binder.registerCustomEditor(UserType.class, "userType", new PropertyEditorSupport() {
-            @Override
-            public String getAsText() {
-                return super.getAsText();
-            }
-
-            @Override
-            public void setAsText(String text) throws IllegalArgumentException {
-                setValue(UserTypes.valueOf(text.toUpperCase()).getType());
-            }
-        });
-        binder.registerCustomEditor(List.class, "schedules", new PropertyEditorSupport() {
-            @Override
-            public void setAsText(String text) {
-                List<Schedule> schedules = new ArrayList<>();
-
-                if (text != null && !text.isEmpty()) {
-                    Schedule schedule = getSchedule(text);
-                    schedules.add(schedule);
-                }
-
-                setValue(schedules);
-            }
-
-            @Override
-            public String getAsText() {
-                List<Schedule> schedules = (List<Schedule>) getValue();
-                return schedules != null ? schedules.toString() : "";
-            }
-        });
-    }
-
-    private Schedule getSchedule(String text) {
-        return null;
     }
 }
