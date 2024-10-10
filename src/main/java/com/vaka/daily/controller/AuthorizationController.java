@@ -1,7 +1,6 @@
 package com.vaka.daily.controller;
 
 import com.vaka.daily.service.admin.UserService;
-import com.vaka.dailyClient.model.User;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;

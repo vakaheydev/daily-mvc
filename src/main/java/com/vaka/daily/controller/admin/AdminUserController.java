@@ -2,26 +2,20 @@ package com.vaka.daily.controller.admin;
 
 import com.vaka.daily.service.admin.UserService;
 import com.vaka.daily.service.admin.UserTypeService;
-import com.vaka.dailyClient.model.Schedule;
 import com.vaka.dailyClient.model.User;
 import com.vaka.dailyClient.model.UserType;
-import com.vaka.dailyClient.model.UserTypes;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
-import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 
-import java.beans.PropertyEditorSupport;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
 
-@Slf4j
 @Controller
+@Slf4j
 @RequestMapping("/admin/user")
 public class AdminUserController {
     UserService userService;

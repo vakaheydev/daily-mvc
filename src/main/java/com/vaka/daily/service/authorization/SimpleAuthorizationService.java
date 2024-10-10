@@ -1,8 +1,8 @@
 package com.vaka.daily.service.authorization;
 
 import com.vaka.dailyClient.client.blocked.UserClient;
-import com.vaka.dailyClient.model.UserNotFoundException;
 import com.vaka.dailyClient.model.User;
+import com.vaka.dailyClient.model.UserNotFoundException;
 import com.vaka.dailyClient.model.dto.UserDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
