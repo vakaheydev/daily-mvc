@@ -1,7 +1,7 @@
 package com.vaka.daily.config;
 
-import com.vaka.dailyClient.client.blocked.*;
-import com.vaka.dailyClient.config.RestClientConfig;
+import com.vaka.daily_client.client.blocked.*;
+import com.vaka.daily_client.config.RestClientConfig;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

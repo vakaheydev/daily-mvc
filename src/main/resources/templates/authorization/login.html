@@ -9,6 +9,7 @@
             height: 100%;
             margin: 0;
         }
+
         /* Контейнер для центрирования */
         .container {
             display: flex;
@@ -16,6 +17,7 @@
             align-items: center; /* Вертикальное центрирование */
             height: 100%; /* Высота контейнера равна высоте окна браузера */
         }
+
         /* Стиль формы */
         .login-form {
             border: 1px solid #ccc;
@@ -27,11 +29,11 @@
     </style>
 </head>
 <body>
-    <div class="container">
-        <form class="login-form" th:action="@{/authorization/login}" method="POST">
-            <p>Username: <input type="text" name="username" required></p>
-            <button type="submit" style="background: rgb(128,128,128)">Log in</button>
-        </form>
-    </div>
+<div class="container">
+    <form class="login-form" th:action="@{/authorization/login}" method="POST">
+        <p>Username: <input type="text" name="username" required></p>
+        <button type="submit" style="background: rgb(128,128,128)">Log in</button>
+    </form>
+</div>
 </body>
 </html>

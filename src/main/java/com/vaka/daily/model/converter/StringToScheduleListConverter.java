@@ -1,6 +1,6 @@
 package com.vaka.daily.model.converter;
 
-import com.vaka.dailyClient.model.Schedule;
+import com.vaka.daily_client.model.Schedule;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
 

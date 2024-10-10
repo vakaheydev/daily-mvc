@@ -1,10 +1,10 @@
 package com.vaka.daily.service.admin;
 
 import com.vaka.daily.service.AbstractService;
-import com.vaka.dailyClient.client.Client;
-import com.vaka.dailyClient.client.blocked.UserClient;
-import com.vaka.dailyClient.model.Schedule;
-import com.vaka.dailyClient.model.User;
+import com.vaka.daily_client.client.Client;
+import com.vaka.daily_client.client.blocked.UserClient;
+import com.vaka.daily_client.model.Schedule;
+import com.vaka.daily_client.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

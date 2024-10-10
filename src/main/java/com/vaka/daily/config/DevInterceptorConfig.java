@@ -16,6 +16,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 public class DevInterceptorConfig implements WebMvcConfigurer {
     @Value("${debugging.httplogs}")
     private boolean isHttpLoggingEnabled;
+
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         if (isHttpLoggingEnabled) {

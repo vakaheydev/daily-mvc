@@ -1,6 +1,6 @@
 package com.vaka.daily.service;
 
-import com.vaka.dailyClient.client.Client;
+import com.vaka.daily_client.client.Client;
 
 import java.util.List;
 

@@ -17,7 +17,8 @@ public class WebConfig implements WebMvcConfigurer {
     private final StringToScheduleListConverter stringToScheduleListConverter;
 
     @Autowired
-    public WebConfig(ServerAvailabilityInterceptor interceptor, StringToUserTypeConverter stringToUserTypeConverter, StringToScheduleListConverter stringToScheduleListConverter) {
+    public WebConfig(ServerAvailabilityInterceptor interceptor, StringToUserTypeConverter stringToUserTypeConverter,
+                     StringToScheduleListConverter stringToScheduleListConverter) {
         this.interceptor = interceptor;
         this.stringToUserTypeConverter = stringToUserTypeConverter;
         this.stringToScheduleListConverter = stringToScheduleListConverter;

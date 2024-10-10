@@ -1,7 +1,8 @@
 package com.vaka.daily.controller.admin;
 
+import com.vaka.daily.controller.CommonController;
 import com.vaka.daily.service.admin.UserTypeService;
-import com.vaka.dailyClient.model.UserType;
+import com.vaka.daily_client.model.UserType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,7 +14,7 @@ import java.util.List;
 
 @Controller
 @RequestMapping("/admin/user_type")
-public class AdminUserTypeController {
+public class AdminUserTypeController implements CommonController {
     private UserTypeService userTypeService;
 
     @Autowired

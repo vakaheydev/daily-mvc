@@ -1,9 +1,10 @@
 package com.vaka.daily.controller.admin;
 
+import com.vaka.daily.controller.CommonController;
 import com.vaka.daily.service.admin.UserService;
 import com.vaka.daily.service.admin.UserTypeService;
-import com.vaka.dailyClient.model.User;
-import com.vaka.dailyClient.model.UserType;
+import com.vaka.daily_client.model.User;
+import com.vaka.daily_client.model.UserType;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -17,7 +18,7 @@ import java.util.List;
 @Controller
 @Slf4j
 @RequestMapping("/admin/user")
-public class AdminUserController {
+public class AdminUserController implements CommonController {
     UserService userService;
     UserTypeService userTypeService;
 
@@ -28,6 +29,7 @@ public class AdminUserController {
     }
 
     @GetMapping
+    @Override
     public String get(Model model) {
         List<User> users = userService.getAll();
         users.sort(Comparator.comparingInt(User::getId));
@@ -37,7 +39,8 @@ public class AdminUserController {
     }
 
     @GetMapping("/{id}")
-    public String getUserById(@PathVariable("id") Integer id, Model model) {
+    @Override
+    public String getById(@PathVariable("id") Integer id, Model model) {
         User user = userService.getById(id);
 
         model.addAttribute("user", user);

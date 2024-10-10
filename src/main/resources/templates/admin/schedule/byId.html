@@ -11,7 +11,7 @@
 <div class="container mt-5">
     <h1 class="mb-4">User List</h1>
     <table class="table table-dark table-striped table-bordered">
-        <!--        <thead class="thead-dark">-->
+        <thead class="thead-dark">
         <tr>
             <th>ID</th>
             <th>Login</th>
@@ -19,10 +19,12 @@
             <th>Second Name</th>
             <th>Patronymic</th>
             <th>User type</th>
+            <!--            <th>Schedules</th>-->
+            <th>Actions</th>
         </tr>
         </thead>
         <tbody>
-        <tr th:each="user : ${users}">
+        <tr>
             <td>
                 <a th:href="@{/admin/user/{id}(id=${user.id})}" class="text-decoration-none">
                     <p th:text="${user.id}"></p>
@@ -33,6 +35,13 @@
             <td th:text="${user.secondName}"></td>
             <td th:text="${user.patronymic}"></td>
             <td th:text="${user.userType.name}"></td>
+            <!--            <td th:text="${user.schedules}"></td>-->
+            <td>
+                <a th:href="@{/admin/user/edit/{id}(id=${user.id})}" class="btn btn-primary btn-sm">
+                    Edit</a>
+                <a th:href="@{/admin/user/delete/{id}(id=${user.id})}" class="btn btn-danger btn-sm"
+                   onclick="return confirm('Are you sure you want to delete this user?');">Delete</a>
+            </td>
         </tr>
         </tbody>
     </table>

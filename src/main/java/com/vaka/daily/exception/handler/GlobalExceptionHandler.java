@@ -51,6 +51,7 @@ public class GlobalExceptionHandler {
 
         return "error/defaultError";
     }
+
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     @ExceptionHandler(Exception.class)
     public String handle(Exception ex) {

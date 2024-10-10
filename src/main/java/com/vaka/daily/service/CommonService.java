@@ -4,6 +4,7 @@ import java.util.List;
 
 /**
  * Common service for entity of type {@code T}.
+ *
  * @param <T> entity type
  */
 public interface CommonService<T> {
