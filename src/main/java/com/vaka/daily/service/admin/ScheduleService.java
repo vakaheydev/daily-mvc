@@ -7,5 +7,5 @@ import com.vaka.daily_client.model.Schedule;
 import java.util.List;
 
 public interface ScheduleService extends CommonService<Schedule> {
-    public List<ScheduleDto> convertToDto(List<Schedule> schedules);
+    ScheduleDto toDto(Schedule schedule);
 }

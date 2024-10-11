@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>User Types</title>
+    <title>Tasks</title>
     <!-- Подключение Bootstrap CSS -->
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
           rel="stylesheet">
@@ -10,22 +10,29 @@
 <body>
 <div class="container mt-5">
     <a href="javascript:history.back()" class="btn btn-primary">Back</a>
-    <h1 class="mb-4">User Types</h1>
+    <h1 class="mb-4">Tasks</h1>
     <table class="table table-dark table-striped table-bordered">
+        <!--        <thead class="thead-dark">-->
         <tr>
             <th>ID</th>
             <th>Name</th>
+            <th>Description</th>
+            <th>Deadline</th>
+            <th>Status</th>
         </tr>
         </thead>
         <tbody>
-        <tr th:each="userType : ${userTypes}">
+        <tr th:each="task : ${tasks}">
             <td>
-                <a th:href="@{/admin/user_type/{id}(id=${userType.id})}"
+                <a th:href="@{/admin/task/{id}(id=${task.id})}"
                    class="text-decoration-none">
-                    <p th:text="${userType.id}"></p>
+                    <p th:text="${task.id}"></p>
                 </a>
             </td>
-            <td th:text="${userType.name}"></td>
+            <td th:text="${task.name}"></td>
+            <td th:text="${task.description}"></td>
+            <td th:text="${task.deadline}"></td>
+            <td th:text="${task.status}"></td>
         </tr>
         </tbody>
     </table>

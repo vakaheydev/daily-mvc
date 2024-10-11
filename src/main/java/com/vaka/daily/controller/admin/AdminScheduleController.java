@@ -7,6 +7,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.List;
@@ -24,7 +25,9 @@ public class AdminScheduleController implements CommonController {
     @GetMapping
     @Override
     public String get(Model model) {
-        List<ScheduleDto> scheduleDtos = service.convertToDto(service.getAll());
+        List<ScheduleDto> scheduleDtos = service.getAll().stream()
+                .map(service::toDto)
+                .toList();
 
         model.addAttribute("schedules", scheduleDtos);
         return "admin/schedule/index";
@@ -32,7 +35,10 @@ public class AdminScheduleController implements CommonController {
 
     @GetMapping("/{id}")
     @Override
-    public String getById(Integer id, Model model) {
-        return null;
+    public String getById(@PathVariable("id") Integer id, Model model) {
+        ScheduleDto schedule = service.toDto(service.getById(id));
+
+        model.addAttribute("schedule", schedule);
+        return "admin/schedule/byId";
     }
 }

@@ -26,8 +26,7 @@ public class SimpleScheduleService extends AbstractService<Schedule> implements 
     }
 
     @Override
-    public List<ScheduleDto> convertToDto(List<Schedule> schedules) {
-        return schedules.stream()
-                .map(scheduleToDtoConverter::convert).toList();
+    public ScheduleDto toDto(Schedule schedule) {
+        return scheduleToDtoConverter.convert(schedule);
     }
 }
