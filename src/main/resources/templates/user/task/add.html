@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Task add</title>
+    <!-- Подключение Bootstrap CSS -->
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+          rel="stylesheet">
+</head>
+<body>
+<form th:action="@{/user/add}" th:method="post" class="p-4 bg-dark text-white rounded">
+    <!-- Поле ID (только для отображения, без возможности редактирования) -->
+    <div class="mb-3">
+        <label for="id" class="form-label">ID</label>
+        <input type="text" id="id" name="id" class="form-control" value="1" readonly>
+    </div>
+
+    <!-- Поле Name для ввода названия -->
+    <div class="mb-3">
+        <label for="name" class="form-label">Name</label>
+        <input type="text" id="name" name="name" class="form-control" placeholder="Enter task name">
+    </div>
+
+    <!-- Поле Description для ввода описания -->
+    <div class="mb-3">
+        <label for="description" class="form-label">Description</label>
+        <textarea id="description" name="description" class="form-control" rows="3" placeholder="Enter task description"></textarea>
+    </div>
+
+    <!-- Поле Deadline для ввода крайнего срока -->
+    <div class="mb-3">
+        <label for="deadline" class="form-label">Deadline</label>
+        <input type="date" id="deadline" name="deadline" class="form-control">
+    </div>
+
+    <!-- Поле Status для выбора статуса задачи -->
+    <div class="mb-3">
+        <label for="status" class="form-label">Status</label>
+        <select id="status" name="status" class="form-select">
+            <option value="Pending">Pending</option>
+            <option value="In Progress">In Progress</option>
+            <option value="Completed">Completed</option>
+        </select>
+    </div>
+
+    <!-- Кнопки управления -->
+    <div class="d-flex justify-content-between">
+        <!-- Кнопка отправки формы -->
+        <button type="submit" class="btn btn-primary">Save</button>
+        <!-- Кнопка сброса формы -->
+        <button type="reset" class="btn btn-secondary">Reset</button>
+    </div>
+</form>
+<!-- Подключение Bootstrap JS и jQuery -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

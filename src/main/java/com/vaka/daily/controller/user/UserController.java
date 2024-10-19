@@ -1,6 +1,6 @@
-package com.vaka.daily.controller;
+package com.vaka.daily.controller.user;
 
-import com.vaka.daily.service.admin.UserService;
+import com.vaka.daily.service.UserService;
 import com.vaka.daily_client.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;

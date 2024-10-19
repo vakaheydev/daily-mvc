@@ -1,6 +1,7 @@
 package com.vaka.daily.config;
 
 import com.vaka.daily.handlerinterceptor.ServerAvailabilityInterceptor;
+import com.vaka.daily.model.converter.StringToLocalDateTimeConverter;
 import com.vaka.daily.model.converter.StringToScheduleListConverter;
 import com.vaka.daily.model.converter.StringToUserTypeConverter;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,13 +16,15 @@ public class WebConfig implements WebMvcConfigurer {
     private final ServerAvailabilityInterceptor interceptor;
     private final StringToUserTypeConverter stringToUserTypeConverter;
     private final StringToScheduleListConverter stringToScheduleListConverter;
+    private final StringToLocalDateTimeConverter stringToLocalDateTimeConverter;
 
-    @Autowired
     public WebConfig(ServerAvailabilityInterceptor interceptor, StringToUserTypeConverter stringToUserTypeConverter,
-                     StringToScheduleListConverter stringToScheduleListConverter) {
+                     StringToScheduleListConverter stringToScheduleListConverter,
+                     StringToLocalDateTimeConverter stringToLocalDateTimeConverter) {
         this.interceptor = interceptor;
         this.stringToUserTypeConverter = stringToUserTypeConverter;
         this.stringToScheduleListConverter = stringToScheduleListConverter;
+        this.stringToLocalDateTimeConverter = stringToLocalDateTimeConverter;
     }
 
     @Override
@@ -39,5 +42,7 @@ public class WebConfig implements WebMvcConfigurer {
     public void addFormatters(FormatterRegistry registry) {
         registry.addConverter(stringToUserTypeConverter);
         registry.addConverter(stringToScheduleListConverter);
+        registry.addConverter(stringToScheduleListConverter);
+        registry.addConverter(stringToLocalDateTimeConverter);
     }
 }

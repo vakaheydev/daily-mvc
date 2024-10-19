@@ -2,7 +2,7 @@ package com.vaka.daily.controller.admin;
 
 import com.vaka.daily.controller.CommonController;
 import com.vaka.daily.model.dto.ScheduleDto;
-import com.vaka.daily.service.admin.ScheduleService;
+import com.vaka.daily.service.ScheduleService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

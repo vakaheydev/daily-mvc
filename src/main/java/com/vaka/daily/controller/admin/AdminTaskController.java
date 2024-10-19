@@ -1,7 +1,7 @@
 package com.vaka.daily.controller.admin;
 
 import com.vaka.daily.controller.CommonController;
-import com.vaka.daily.service.admin.TaskService;
+import com.vaka.daily.service.TaskService;
 import com.vaka.daily_client.model.Task;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -37,4 +37,5 @@ public class AdminTaskController implements CommonController {
 
         return "/admin/task/byId";
     }
+
 }

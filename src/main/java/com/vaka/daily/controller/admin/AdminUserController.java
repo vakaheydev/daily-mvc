@@ -1,8 +1,8 @@
 package com.vaka.daily.controller.admin;
 
 import com.vaka.daily.controller.CommonController;
-import com.vaka.daily.service.admin.UserService;
-import com.vaka.daily.service.admin.UserTypeService;
+import com.vaka.daily.service.UserService;
+import com.vaka.daily.service.UserTypeService;
 import com.vaka.daily_client.model.User;
 import com.vaka.daily_client.model.UserType;
 import lombok.extern.slf4j.Slf4j;

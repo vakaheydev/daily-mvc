@@ -1,4 +1,4 @@
-package com.vaka.daily.service.admin;
+package com.vaka.daily.service;
 
 import com.vaka.daily.service.CommonService;
 import com.vaka.daily_client.model.UserType;

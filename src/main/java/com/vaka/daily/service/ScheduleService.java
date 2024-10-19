@@ -1,4 +1,4 @@
-package com.vaka.daily.service.admin;
+package com.vaka.daily.service;
 
 import com.vaka.daily.model.dto.ScheduleDto;
 import com.vaka.daily.service.CommonService;
