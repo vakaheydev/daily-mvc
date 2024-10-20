@@ -8,38 +8,61 @@
           rel="stylesheet">
 </head>
 <body>
-<form th:action="@{/user/add}" th:method="post" class="p-4 bg-dark text-white rounded">
+<form th:action="@{/user/add}" th:object= "${task}" th:method="post" class="p-4 bg-dark text-white rounded">
     <!-- Поле ID (только для отображения, без возможности редактирования) -->
     <div class="mb-3">
         <label for="id" class="form-label">ID</label>
-        <input type="text" id="id" name="id" class="form-control" value="1" readonly>
+        <input
+                type="text"
+                id="id"
+                name="id"
+                class="form-control"
+                th:value="*{id}" readonly>
     </div>
 
     <!-- Поле Name для ввода названия -->
     <div class="mb-3">
         <label for="name" class="form-label">Name</label>
-        <input type="text" id="name" name="name" class="form-control" placeholder="Enter task name">
+        <input
+                type="text"
+                id="name"
+                name="name"
+                th:field="*{name}"
+                class="form-control"
+                placeholder="Task Name">
     </div>
 
     <!-- Поле Description для ввода описания -->
     <div class="mb-3">
         <label for="description" class="form-label">Description</label>
-        <textarea id="description" name="description" class="form-control" rows="3" placeholder="Enter task description"></textarea>
+        <input
+                type="text"
+                id="description"
+                name="description"
+                th:field="*{description}"
+                class="form-control"
+                placeholder="Task description">
     </div>
 
     <!-- Поле Deadline для ввода крайнего срока -->
     <div class="mb-3">
         <label for="deadline" class="form-label">Deadline</label>
-        <input type="date" id="deadline" name="deadline" class="form-control">
+        <input
+                type="datetime-local"
+                id="deadline"
+                name="deadline"
+                th:field="*{deadline}"
+                class="form-control"
+                placeholder="Task deadline">
     </div>
 
     <!-- Поле Status для выбора статуса задачи -->
     <div class="mb-3">
         <label for="status" class="form-label">Status</label>
-        <select id="status" name="status" class="form-select">
-            <option value="Pending">Pending</option>
-            <option value="In Progress">In Progress</option>
-            <option value="Completed">Completed</option>
+        <select th:field="*{status}" id="status" name="status" class="form-select">
+            <option th:value="false" value="Pending">Pending</option>
+            <option th:value="false" value="In Progress">In Progress</option>
+            <option th:value="true" value="Completed">Completed</option>
         </select>
     </div>
 
