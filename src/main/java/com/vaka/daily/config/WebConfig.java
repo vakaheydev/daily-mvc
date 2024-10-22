@@ -4,7 +4,6 @@ import com.vaka.daily.handlerinterceptor.ServerAvailabilityInterceptor;
 import com.vaka.daily.model.converter.StringToLocalDateTimeConverter;
 import com.vaka.daily.model.converter.StringToScheduleListConverter;
 import com.vaka.daily.model.converter.StringToUserTypeConverter;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.format.FormatterRegistry;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;

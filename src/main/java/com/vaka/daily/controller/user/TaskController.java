@@ -1,64 +1,55 @@
 package com.vaka.daily.controller.user;
 
-import com.vaka.daily.model.converter.TaskConverter;
 import com.vaka.daily.model.dto.TaskDto;
-import com.vaka.daily.service.SimpleScheduleService;
+import com.vaka.daily.service.ScheduleService;
 import com.vaka.daily.service.TaskService;
-import com.vaka.daily_client.model.Schedule;
 import com.vaka.daily_client.model.Task;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 
-import java.beans.PropertyEditorSupport;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-
-import static com.vaka.daily.model.converter.TaskConverter.*;
-
 @Controller
-@RequestMapping("/user/add")
+@RequestMapping("/user/task")
 @Slf4j
+@SessionAttributes("scheduleId")
 public class TaskController {
     TaskService taskService;
-    SimpleScheduleService simpleScheduleService;
+    ScheduleService scheduleService;
 
-    public TaskController(TaskService taskService, SimpleScheduleService scheduleService) {
+    public TaskController(TaskService taskService, ScheduleService scheduleService) {
         this.taskService = taskService;
-        this.simpleScheduleService = scheduleService;
+        this.scheduleService = scheduleService;
     }
 
-    @GetMapping
-    public String addTask(Model model) {
+    @GetMapping("/add")
+    public String addTask(Model model, @RequestParam("scheduleId") int scheduleId) {
         TaskDto task = new TaskDto();
+        log.info("ScheduleId: {}", scheduleId);
+
         model.addAttribute("task", task);
+        model.addAttribute("scheduleId", scheduleId);
         return "user/task/add";
     }
 
-    @PostMapping
-    public String saveTask(@ModelAttribute("task") TaskDto taskDto ) {
-        Task task = convertToTask(taskDto);
-        Schedule schedule = simpleScheduleService.getById(1);
-        task.setSchedule(schedule);
+    @PostMapping("/add")
+    public String saveTask(Model model, @ModelAttribute("task") Task task) {
+        Integer scheduleId = (Integer) model.getAttribute("scheduleId");
+        log.info("ScheduleId: {}", scheduleId);
 
+        task.setScheduleId(scheduleId);
         taskService.create(task);
 
         return "redirect:/user/start";
     }
 
-    @InitBinder
-    public void initBinder(WebDataBinder binder) {
-        binder.registerCustomEditor(LocalDateTime.class, new PropertyEditorSupport() {
-            @Override
-            public void setAsText(String text) throws IllegalArgumentException {
-                // Определяет формат, который будет использоваться для конвертации
-                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm");
-                // Конвертирует строку в LocalDateTime
-                setValue(LocalDateTime.parse(text, formatter));
-            }
-        });
+    @PutMapping("/edit")
+    public String editTask() {
+        throw new RuntimeException("Aziz sdelai etot method");
     }
 
+    @DeleteMapping({"/delete"})
+    public String deleteTask() {
+        throw new RuntimeException("Aziz sdelai etot method");
+    }
 }

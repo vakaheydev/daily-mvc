@@ -29,7 +29,7 @@
     <table class="table table-dark table-striped table-bordered">
         <thead class="thead-dark">
         <tr>
-            <th>ID</th>
+            <th>№</th>
             <th>Name</th>
             <th>Tasks</th>
         </tr>
@@ -46,7 +46,7 @@
                 <table class="table table-dark table-striped table-bordered">
                     <thead class="thead-dark">
                     <tr>
-                        <th>ID</th>
+                        <th>№</th>
                         <th>Name</th>
                         <th>Description</th>
                         <th>Deadline</th>
@@ -64,11 +64,26 @@
                         <td th:text="${task.description}"></td>
                         <td th:text="${task.deadline}"></td>
                         <td th:text="${task.status}"></td>
+                        <td>
+                            <form th:action="@{/user/task/edit(scheduleId=${schedule.id})}" method="post" style="display:inline;">
+                                <input type="hidden" name="_method" value="PUT">
+                                <button type="submit" class="btn btn-primary btn-sm" formtarget="_blank">Edit</button>
+                            </form>
+
+                            <form th:action="@{/user/task/delete(scheduleId=${schedule.id})}" method="post" style="display:inline;"
+                                  onsubmit="return confirm('Are you sure you want to delete this task?');">
+                                <input type="hidden" name="_method" value="DELETE">
+                                <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                            </form>
+
+
+                        </td>
                     </tr>
                     </tbody>
                 </table>
 <!--                <div class="plus-icon" >-->
-                    <a th:href="@{/user/add}" class="plus-icon" th:target="_blank">
+                    <a th:href="@{/user/task/add(scheduleId=${schedule.id})}" class="plus-icon"
+                       th:target="_blank">
                         <i class="bi bi-plus-lg"></i>
                     </a>
 <!--                </div>-->
