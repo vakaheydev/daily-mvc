@@ -8,7 +8,8 @@
           rel="stylesheet">
 </head>
 <body>
-<form th:action="@{/user/add}" th:object= "${task}" th:method="post" class="p-4 bg-dark text-white rounded">
+<form th:action="@{/user/task/add}" th:object= "${task}" th:method="post"
+      class="p-4 bg-dark text-white rounded">
     <!-- Поле ID (только для отображения, без возможности редактирования) -->
     <div class="mb-3">
         <label for="id" class="form-label">ID</label>
