@@ -15,11 +15,9 @@ import org.springframework.web.bind.annotation.*;
 @SessionAttributes("scheduleId")
 public class TaskController {
     TaskService taskService;
-    ScheduleService scheduleService;
 
-    public TaskController(TaskService taskService, ScheduleService scheduleService) {
+    public TaskController(TaskService taskService) {
         this.taskService = taskService;
-        this.scheduleService = scheduleService;
     }
 
     @GetMapping("/add")
@@ -41,15 +39,5 @@ public class TaskController {
         taskService.create(task);
 
         return "redirect:/user/start";
-    }
-
-    @PutMapping("/edit")
-    public String editTask() {
-        throw new RuntimeException("Aziz sdelai etot method");
-    }
-
-    @DeleteMapping({"/delete"})
-    public String deleteTask() {
-        throw new RuntimeException("Aziz sdelai etot method");
     }
 }
