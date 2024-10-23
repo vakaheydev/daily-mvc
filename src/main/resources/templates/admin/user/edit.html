@@ -44,11 +44,6 @@
                 <option th:each="type : ${userTypes}" th:value="${type}" th:text="${type}"></option>
             </select>
         </div>
-        <!--        <div class="form-group">-->
-        <!--            <label for="schedules">Schedules</label>-->
-        <!--            <textarea id="schedules" th:field="*{schedules}"-->
-        <!--                      class="form-control"></textarea>-->
-        <!--        </div>-->
         <button type="submit" class="btn btn-primary">Save</button>
         <a href="javascript:history.back()" class="btn btn-secondary">Back</a>
     </form>

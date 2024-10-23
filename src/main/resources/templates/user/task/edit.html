@@ -2,16 +2,21 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Task add</title>
+    <title>Edit Task</title>
     <!-- Подключение Bootstrap CSS -->
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
           rel="stylesheet">
 </head>
 <body>
 <div class="container mt-5">
-    <h1 class="mb-4">Save Task</h1>
-    <form th:action="@{/user/task/add}" th:object="${task}"
-          th:method="post">
+    <h1 class="mb-4">Edit Task</h1>
+    <form th:action="@{/user/task/edit/{id}(id=${task.id}, scheduleId=${task.scheduleId})}"
+          th:object="${task}"
+          th:method="put">
+        <div class="form-group">
+            <label for="id">ID</label>
+            <input type="text" id="id" th:field="*{id}" class="form-control" readonly>
+        </div>
         <div class="form-group">
             <label for="name">Name</label>
             <input type="text" id="name" th:field="*{name}" class="form-control" required>
@@ -20,21 +25,15 @@
             <label for="description">Description</label>
             <input type="text" id="description" th:field="*{description}" class="form-control" required>
         </div>
-        <div class="mb-3">
-            <label for="deadline" class="form-label">Deadline</label>
-            <input
-                    type="datetime-local"
-                    id="deadline"
-                    name="deadline"
-                    th:field="*{deadline}"
-                    class="form-control"
-                    placeholder="Task deadline">
+        <div class="form-group">
+            <label for="deadline" th:text="*{deadline}">Deadline</label>
+            <input type="datetime-local" id="deadline" name="deadline"
+                   th:field="*{deadline}" class="form-control" required>
         </div>
         <div class="mb-3">
             <label for="status" class="form-label">Status</label>
             <select th:field="*{status}" id="status" name="status" class="form-select">
                 <option th:value="false" value="Pending">Pending</option>
-                <option th:value="false" value="In Progress">In Progress</option>
                 <option th:value="true" value="Completed">Completed</option>
             </select>
         </div>

@@ -1,13 +1,15 @@
 package com.vaka.daily.controller.user;
 
 import com.vaka.daily.model.dto.TaskDto;
-import com.vaka.daily.service.ScheduleService;
 import com.vaka.daily.service.TaskService;
 import com.vaka.daily_client.model.Task;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+
+import java.sql.Date;
+import java.time.ZoneId;
 
 @Controller
 @RequestMapping("/user/task")
@@ -23,7 +25,6 @@ public class TaskController {
     @GetMapping("/add")
     public String addTask(Model model, @RequestParam("scheduleId") int scheduleId) {
         TaskDto task = new TaskDto();
-        log.info("ScheduleId: {}", scheduleId);
 
         model.addAttribute("task", task);
         model.addAttribute("scheduleId", scheduleId);
@@ -33,10 +34,34 @@ public class TaskController {
     @PostMapping("/add")
     public String saveTask(Model model, @ModelAttribute("task") Task task) {
         Integer scheduleId = (Integer) model.getAttribute("scheduleId");
-        log.info("ScheduleId: {}", scheduleId);
 
         task.setScheduleId(scheduleId);
         taskService.create(task);
+
+        return "redirect:/user/start";
+    }
+
+    @GetMapping("/edit/{id}")
+    public String getEditTask(Model model, @PathVariable("id") Integer id, @RequestParam("scheduleId") int scheduleId) {
+        Task task = taskService.getById(id);
+        model.addAttribute("task", task);
+        model.addAttribute("deadline", Date.from(task.getDeadline().atZone(ZoneId.systemDefault()).toInstant()));
+        log.info("Task for edit: {}", task);
+
+        return "user/task/edit";
+    }
+
+    @PutMapping("/edit/{id}")
+    public String putEditTask(@PathVariable("id") Integer id, Task task, @RequestParam("scheduleId") int scheduleId) {
+        task.setScheduleId(scheduleId);
+        taskService.updateById(id, task);
+
+        return "redirect:/user/start";
+    }
+
+    @DeleteMapping({"/delete/{id}"})
+    public String deleteTask(@PathVariable("id") Integer id) {
+        taskService.deleteById(id);
 
         return "redirect:/user/start";
     }

@@ -20,12 +20,10 @@ public class ServerAvailabilityInterceptor implements HandlerInterceptor {
     }
 
     @Override
-    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
-            throws Exception {
+    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) {
         if (request.getRequestURI().contains("user") && !userService.isServerAlive()) {
             log.error("REST Server is not alive!");
             throw new ServerIsNotAliveException();
-//            response.sendError(HttpServletResponse.SC_SERVICE_UNAVAILABLE, "Server is not available");
         }
 
         return true;
