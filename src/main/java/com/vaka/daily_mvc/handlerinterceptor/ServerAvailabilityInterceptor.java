@@ -1,0 +1,31 @@
+package com.vaka.daily_mvc.handlerinterceptor;
+
+import com.vaka.daily_mvc.exception.ServerIsNotAliveException;
+import com.vaka.daily_mvc.service.UserService;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+import org.springframework.web.servlet.HandlerInterceptor;
+
+@Slf4j
+@Component
+public class ServerAvailabilityInterceptor implements HandlerInterceptor {
+    private final UserService userService;
+
+    @Autowired
+    public ServerAvailabilityInterceptor(UserService userService) {
+        this.userService = userService;
+    }
+
+    @Override
+    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) {
+        if (request.getRequestURI().contains("user") && !userService.isServerAlive()) {
+            log.error("REST Server is not alive!");
+            throw new ServerIsNotAliveException();
+        }
+
+        return true;
+    }
+}
