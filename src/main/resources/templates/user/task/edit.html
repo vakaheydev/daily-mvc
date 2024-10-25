@@ -26,13 +26,23 @@
             <input type="text" id="description" th:field="*{description}" class="form-control" required>
         </div>
         <div class="form-group">
-            <label for="deadline" th:text="*{deadline}">Deadline</label>
+            <label for="deadline">Deadline</label>
             <input type="datetime-local" id="deadline" name="deadline"
-                   th:field="*{deadline}" class="form-control" required>
+                   th:value="${#temporals.format(deadline, 'yyyy-MM-dd''T''HH:mm')}"
+                   class="form-control" required>
+
+
         </div>
+        <script>
+            document.addEventListener("DOMContentLoaded", function() {
+                let deadlineValue = /*[[${deadline}]]*/ '';
+                let formattedDeadline = new Date(deadlineValue).toISOString().slice(0,16);
+                document.getElementById("deadline").value = formattedDeadline;
+            });
+        </script>
         <div class="mb-3">
             <label for="status" class="form-label">Status</label>
-            <select th:field="*{status}" id="status" name="status" class="form-select">
+            <select th:field="*{status}" value="" id="status" name="status" class="form-select">
                 <option th:value="false" value="Pending">Pending</option>
                 <option th:value="true" value="Completed">Completed</option>
             </select>

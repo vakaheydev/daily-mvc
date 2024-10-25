@@ -45,7 +45,7 @@ public class TaskController {
     public String getEditTask(Model model, @PathVariable("id") Integer id, @RequestParam("scheduleId") int scheduleId) {
         Task task = taskService.getById(id);
         model.addAttribute("task", task);
-        model.addAttribute("deadline", Date.from(task.getDeadline().atZone(ZoneId.systemDefault()).toInstant()));
+        model.addAttribute("deadline", task.getDeadline());
         log.info("Task for edit: {}", task);
 
         return "user/task/edit";
