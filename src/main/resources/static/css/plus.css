@@ -1,0 +1,13 @@
+.plus-icon {
+    width: 100px;
+    height: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 8px;
+}
+
+.plus-icon i {
+    font-size: 48px;
+    color: white;
+}

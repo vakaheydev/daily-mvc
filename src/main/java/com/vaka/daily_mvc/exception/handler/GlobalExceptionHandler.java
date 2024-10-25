@@ -21,7 +21,7 @@ public class GlobalExceptionHandler {
     public String handle(NoResourceFoundException ex, Model model) {
         log.error("No resource: {}", ex.getResourcePath());
         model.addAttribute("errorMsg", "No specified resource: " + ex.getResourcePath());
-        model.addAttribute("errorName", "NoResourceFoundException");
+        model.addAttribute("errorName", "No such resource");
 
         return "error/defaultError";
     }

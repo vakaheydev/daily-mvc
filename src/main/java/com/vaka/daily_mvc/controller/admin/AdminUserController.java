@@ -50,19 +50,20 @@ public class AdminUserController {
     @GetMapping("/new")
     public String newUser(Model model) {
         model.addAttribute("user", new UserDto());
+        model.addAttribute("userTypes", getUserTypeNames());
 
-        return "redirect:/admin/user";
+        return "admin/user/new";
     }
 
-    @PostMapping
+    @PostMapping("/new")
     public String post(UserDto entity) {
-        userService.create(new User());
+        userService.create(entity);
 
         return "redirect:/admin/user";
     }
 
-    @DeleteMapping
-    public String delete(Integer id) {
+    @DeleteMapping("/delete/{id}")
+    public String delete(@PathVariable("id") Integer id) {
         userService.deleteById(id);
 
         return "redirect:/admin/user";
@@ -72,17 +73,15 @@ public class AdminUserController {
     public String getEdit(@PathVariable("id") Integer id, Model model) {
         User user = userService.getById(id);
 
-        List<String> userTypeNames = getUserTypeNames();
-
         model.addAttribute("user", user);
-        model.addAttribute("userTypes", userTypeNames);
+        model.addAttribute("userTypes", getUserTypeNames());
 
         return "admin/user/edit";
     }
 
     @PutMapping("/edit/{id}")
-    public String put(Integer id, User entity) {
-        userService.updateById(entity.getId(), entity);
+    public String put(@PathVariable("id") Integer id, User entity) {
+        userService.updateById(id, entity);
 
         return "redirect:/admin/user";
     }

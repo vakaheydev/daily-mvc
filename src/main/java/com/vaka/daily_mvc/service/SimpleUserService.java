@@ -31,7 +31,16 @@ public class SimpleUserService extends AbstractService<User> implements UserServ
 
     @Override
     public User create(UserDto entity) {
-        throw new RuntimeException("Not implemented method");
+        User user = User.builder()
+                .login(entity.getLogin())
+                .password(entity.getPassword())
+                .firstName(entity.getFirstName())
+                .secondName(entity.getSecondName())
+                .patronymic(entity.getPatronymic())
+                .userType(entity.getUserType())
+                .build();
+
+        return userClient.create(user);
     }
 
     @Override
