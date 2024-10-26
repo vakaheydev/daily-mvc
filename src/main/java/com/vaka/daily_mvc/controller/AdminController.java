@@ -1,30 +1,27 @@
 package com.vaka.daily_mvc.controller;
 
+import com.vaka.daily_client.model.UserTypes;
 import com.vaka.daily_mvc.service.authorization.AuthorizationService;
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-@Slf4j
 @Controller
-@RequestMapping("/start")
-public class StartController {
+@RequestMapping("/admin")
+public class AdminController {
     AuthorizationService authorizationService;
 
-    @Autowired
-    public StartController(AuthorizationService authorizationService) {
+    public AdminController(AuthorizationService authorizationService) {
         this.authorizationService = authorizationService;
     }
 
     @GetMapping
-    public String getStart(@CookieValue(value = "username", required = false) String username) {
-        if (!authorizationService.checkUsername(username)) {
+    public String get(@CookieValue(value = "username", required = false) String username) {
+        if (!authorizationService.hasRole(username, UserTypes.ADMIN)) {
             return "redirect:/authorization/login";
         }
 
-        return "redirect:/user/start";
+        return "/admin/index";
     }
 }

@@ -46,7 +46,7 @@ public class AuthorizationController {
 
         response.addCookie(usernameCookie);
 
-        return "redirect:/start";
+        return "redirect:/";
     }
 
     @PostMapping("/logout")
