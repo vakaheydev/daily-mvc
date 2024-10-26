@@ -24,11 +24,8 @@ public class StartController {
     }
 
     @GetMapping
-    public String getStart(@CookieValue(value = "username", defaultValue = "") String username, Model model) {
-        UserDTO userDTO = new UserDTO();
-        userDTO.setLogin(username);
-
-        if (!authorizationService.authorize(userDTO)) {
+    public String getStart(@CookieValue(value = "username", required = false) String username) {
+        if (!authorizationService.checkUsername(username)) {
             return "redirect:/authorization/login";
         }
 

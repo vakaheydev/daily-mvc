@@ -4,6 +4,7 @@ import com.vaka.daily_client.client.blocked.UserClient;
 import com.vaka.daily_client.model.User;
 import com.vaka.daily_client.model.UserNotFoundException;
 import com.vaka.daily_client.model.dto.UserDTO;
+import com.vaka.daily_mvc.model.dto.UserDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,17 +18,34 @@ public class SimpleAuthorizationService implements AuthorizationService {
     }
 
     @Override
-    public boolean authorize(UserDTO userDTO) {
-        if (userDTO.getLogin().isEmpty()) {
+    public boolean authorize(UserDto userDto) {
+        if (userDto.getLogin() == null || userDto.getPassword() == null) {
             return false;
         }
-        User user = null;
 
-        try {
-            user = userClient.getByUniqueName(userDTO.getLogin());
-        } catch (UserNotFoundException ignored) {
+        if (userDto.getLogin().isEmpty() || userDto.getPassword().isEmpty()) {
+            return false;
         }
 
-        return user != null;
+        try {
+            User user = userClient.getByUniqueName(userDto.getLogin());
+            return user.getPassword().equals(userDto.getPassword());
+        } catch (UserNotFoundException ignored) {
+            return false;
+        }
+    }
+
+    @Override
+    public boolean checkUsername(String username) {
+        if (username == null || username.isEmpty()) {
+            return false;
+        }
+
+        try {
+            User user = userClient.getByUniqueName(username);
+            return user != null;
+        } catch (UserNotFoundException ignored) {
+            return false;
+        }
     }
 }

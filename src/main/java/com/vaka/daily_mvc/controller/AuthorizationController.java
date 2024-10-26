@@ -1,10 +1,10 @@
 package com.vaka.daily_mvc.controller;
 
-import com.vaka.daily_mvc.service.UserService;
+import com.vaka.daily_mvc.model.dto.UserDto;
+import com.vaka.daily_mvc.service.authorization.AuthorizationService;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -15,22 +15,30 @@ import org.springframework.web.bind.annotation.RequestParam;
 @RequestMapping("/authorization")
 @Slf4j
 public class AuthorizationController {
-    UserService userService;
+    AuthorizationService service;
 
-    @Autowired
-    public AuthorizationController(UserService userService) {
-        this.userService = userService;
+    public AuthorizationController(AuthorizationService service) {
+        this.service = service;
     }
 
     @GetMapping("/login")
     public String getLogin() {
-//        model.addAttribute("userName", "");
-
         return "authorization/login";
     }
 
     @PostMapping("/login")
-    public String postLogin(@RequestParam("username") String username, HttpServletResponse response) {
+    public String postLogin(@RequestParam("username") String username,
+                            @RequestParam("password") String password,
+                            HttpServletResponse response) {
+        UserDto userDto = UserDto.builder()
+                .login(username)
+                .password(password)
+                .build();
+
+        if (!service.authorize(userDto)) {
+            return "authorization/login";
+        }
+
         Cookie usernameCookie = new Cookie("username", username);
         usernameCookie.setPath("/");
         usernameCookie.setHttpOnly(true);
