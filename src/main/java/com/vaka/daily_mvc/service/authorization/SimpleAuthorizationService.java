@@ -1,15 +1,12 @@
 package com.vaka.daily_mvc.service.authorization;
 
 import com.vaka.daily_client.client.blocked.UserClient;
+import com.vaka.daily_client.exception.UserNotFoundException;
 import com.vaka.daily_client.model.User;
-import com.vaka.daily_client.model.UserNotFoundException;
 import com.vaka.daily_client.model.UserTypes;
-import com.vaka.daily_client.model.dto.UserDTO;
 import com.vaka.daily_mvc.model.dto.UserDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.util.Map;
 
 @Service
 public class SimpleAuthorizationService implements AuthorizationService {

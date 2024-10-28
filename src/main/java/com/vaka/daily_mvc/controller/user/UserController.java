@@ -1,6 +1,6 @@
 package com.vaka.daily_mvc.controller.user;
 
-import com.vaka.daily_client.model.UserNotFoundException;
+import com.vaka.daily_client.exception.UserNotFoundException;
 import com.vaka.daily_mvc.service.UserService;
 import com.vaka.daily_client.model.User;
 import lombok.extern.slf4j.Slf4j;
