@@ -47,6 +47,15 @@ public class AdminUserController {
         return "admin/user/byId";
     }
 
+    @GetMapping("/search")
+    public String getById(@RequestParam("login") String login, Model model) {
+        User user = userService.getByUniqueName(login);
+
+        model.addAttribute("user", user);
+
+        return "admin/user/byId";
+    }
+
     @GetMapping("/new")
     public String newUser(Model model) {
         model.addAttribute("user", new UserDto());
