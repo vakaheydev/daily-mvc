@@ -52,6 +52,16 @@ public class GlobalExceptionHandler {
         return "error/defaultError";
     }
 
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(RuntimeException.class)
+    public String handle(RuntimeException ex, Model model) {
+        log.error("Runtime exception: {}", ex.getMessage());
+        model.addAttribute("errorMsg", ex.getMessage());
+        model.addAttribute("errorName", "Error");
+
+        return "error/defaultError";
+    }
+
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     @ExceptionHandler(Exception.class)
     public String handle(Exception ex) {

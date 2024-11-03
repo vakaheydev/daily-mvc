@@ -1,10 +1,10 @@
 package com.vaka.daily_mvc.service;
 
-import com.vaka.daily_mvc.model.dto.UserDto;
 import com.vaka.daily_client.client.Client;
 import com.vaka.daily_client.client.blocked.UserClient;
 import com.vaka.daily_client.model.Schedule;
 import com.vaka.daily_client.model.User;
+import com.vaka.daily_mvc.model.dto.UserDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -41,6 +41,11 @@ public class SimpleUserService extends AbstractService<User> implements UserServ
                 .build();
 
         return userClient.create(user);
+    }
+
+    @Override
+    public List<User> getByUserTypeName(String userTypeName) {
+        return userClient.getByUserTypeName(userTypeName);
     }
 
     @Override

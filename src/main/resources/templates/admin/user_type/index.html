@@ -6,6 +6,21 @@
     <!-- Подключение Bootstrap CSS -->
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
           rel="stylesheet">
+    <style>
+        plus-icon {
+            width: 100px;
+            height: 100px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 8px;
+        }
+
+        .plus-icon i {
+            font-size: 48px;
+            color: white;
+        }
+    </style>
 </head>
 <body>
 <div class="container mt-5">
@@ -28,20 +43,25 @@
             </td>
             <td th:text="${userType.name}"></td>
             <td>
-                <a
-                        th:href="@{/admin/user_type/edit/{id}(id=${userType.id})}"
-                        class="btn btn-primary btn-sm">
-                    Edit
-                </a>
+                <a th:href="@{/admin/user_type/edit/{id}(id=${userType.id})}"
+                   class="btn btn-primary btn-sm">
+                    Edit</a>
 
-                <form
-                        th:action="@{/admin/user_type/delete/{id}(id=${userType.id})}"
-                        th:method="DELETE" style="display:inline;"
-                        onsubmit="return
-                        confirm('Are you sure you want to delete this user type?');">
+                <form th:action="@{/admin/user_type/delete/{id}(id=${userType.id})}"
+                      th:method="DELETE" style="display:inline;"
+                      onsubmit="return confirm('Are you sure you want to delete this user type?');">
                     <input type="hidden" name="_method" value="DELETE">
                     <button type="submit" class="btn btn-danger btn-sm">Delete</button>
                 </form>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <!-- Плюсик >-->
+                <a th:href="@{/admin/user_type/new}" class="plus-icon">
+                    <i class="bi bi-plus-lg"></i>
+                </a>
+                <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.5/font/bootstrap-icons.min.css">
             </td>
         </tr>
         </tbody>
