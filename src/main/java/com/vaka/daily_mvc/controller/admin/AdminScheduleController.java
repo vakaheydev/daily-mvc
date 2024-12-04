@@ -1,32 +1,35 @@
 package com.vaka.daily_mvc.controller.admin;
 
+import com.vaka.daily_client.model.Task;
+import com.vaka.daily_client.model.User;
 import com.vaka.daily_mvc.model.dto.ScheduleDto;
 import com.vaka.daily_mvc.service.ScheduleService;
 import com.vaka.daily_client.model.Schedule;
+import com.vaka.daily_mvc.service.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @Controller
 @Slf4j
 @RequestMapping("/admin/schedule")
-public class AdminScheduleController implements AdminController<Schedule> {
-    ScheduleService service;
+@SessionAttributes("userId")
+public class AdminScheduleController {
+    UserService userService;
+    ScheduleService scheduleService;
 
-    public AdminScheduleController(ScheduleService service) {
-        this.service = service;
+    public AdminScheduleController(UserService userService, ScheduleService scheduleService) {
+        this.userService = userService;
+        this.scheduleService = scheduleService;
     }
 
     @GetMapping
-    @Override
     public String get(Model model) {
-        List<ScheduleDto> scheduleDtos = service.getAll().stream()
-                .map(service::toDto)
+        List<ScheduleDto> scheduleDtos = scheduleService.getAll().stream()
+                .map(scheduleService::toDto)
                 .toList();
 
         model.addAttribute("schedules", scheduleDtos);
@@ -34,26 +37,55 @@ public class AdminScheduleController implements AdminController<Schedule> {
     }
 
     @GetMapping("/{id}")
-    @Override
     public String getById(@PathVariable("id") Integer id, Model model) {
-        ScheduleDto schedule = service.toDto(service.getById(id));
+        ScheduleDto schedule = scheduleService.toDto(scheduleService.getById(id));
 
         model.addAttribute("schedule", schedule);
         return "admin/schedule/byId";
     }
 
-    @Override
-    public String put(Integer id, Schedule entity) {
-        return null;
+    @GetMapping("/edit/{id}")
+    public String getPut(@PathVariable("id") Integer id, Model model) {
+        Schedule schedule = scheduleService.getById(id);
+        model.addAttribute("schedule", schedule);
+
+        return "admin/schedule/edit";
     }
 
-    @Override
-    public String post(Schedule entity) {
-        return null;
+    @PutMapping("/edit/{id}")
+    public String put(@PathVariable("id") Integer id, Schedule entity) {
+        scheduleService.updateById(id, entity);
+
+        return "redirect:/admin/schedule";
     }
 
-    @Override
-    public String delete(Integer id) {
-        return null;
+    @GetMapping("/new")
+    public String getPost(@RequestParam("userId") Integer userId, Model model) {
+        model.addAttribute("schedule", new Schedule());
+        model.addAttribute("userId", userId);
+
+        return "admin/schedule/new";
+    }
+
+    @PostMapping("/new")
+    public String post(@ModelAttribute("userId") Integer userId, Schedule entity) {
+        User user = userService.getById(userId);
+        entity.setUser(user);
+        scheduleService.create(entity);
+
+        return "redirect:/admin/schedule";
+    }
+
+    @DeleteMapping("/delete/{id}")
+    public String delete(@PathVariable("id") Integer id) {
+        List<Task> tasks = scheduleService.getById(id).getTasks();
+
+        if (!tasks.isEmpty()) {
+            throw new RuntimeException(tasks.size() + " have this schedule");
+        }
+
+        scheduleService.deleteById(id);
+
+        return "redirect:/admin/schedule";
     }
 }

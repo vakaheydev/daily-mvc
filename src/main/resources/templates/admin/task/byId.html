@@ -31,7 +31,7 @@
             </td>
             <td th:text="${task.name}"></td>
             <td th:text="${task.description}"></td>
-            <td th:text="${task.deadline}"></td>
+            <td th:text="${#temporals.format(task.deadline, 'E, dd MMM yyyy HH:mm')}"></td>
             <td th:text="${task.status}"></td>
         </tr>
         </tbody>

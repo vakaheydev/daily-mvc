@@ -6,6 +6,22 @@
     <!-- Подключение Bootstrap CSS -->
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
           rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.5/font/bootstrap-icons.min.css">
+    <style>
+        plus-icon {
+            width: 100px;
+            height: 100px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 8px;
+        }
+
+        .plus-icon i {
+            font-size: 48px;
+            color: white;
+        }
+    </style>
 </head>
 <body>
 <div class="container mt-5">
@@ -27,12 +43,29 @@
                    class="text-decoration-none">
                     <p th:text="${schedule.id}"></p>
                 </a>
+
+                <a
+                        th:href="@{/admin/schedule/edit/{scheduleId}(scheduleId=${schedule.id})}"
+                        class="btn btn-primary btn-sm">
+                    Edit
+                </a>
+
+                <form
+                        th:action="@{/admin/schedule/delete/{scheduleId}(scheduleId=${schedule.id})}"
+                        th:method="DELETE" style="display:inline;"
+                        onsubmit="return confirm('Are you sure you want to delete this schedule?');">
+                    <input type="hidden" name="_method" value="DELETE">
+                    <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                </form>
             </td>
             <td th:text="${schedule.name}"></td>
-            <td th:text="${schedule.userDto.login}"></td>
+            <td>
+                <a th:href="@{/admin/user/search(login=${schedule.userDto.login})}"
+                   th:text="${schedule.userDto.login}"></a>
+            </td>
             <td>
                 <table class="table table-dark table-striped table-bordered">
-                    <!--        <thead class="thead-dark">-->
+                    <thead class="thead-dark">
                     <tr>
                         <th>ID</th>
                         <th>Name</th>
@@ -51,8 +84,33 @@
                         </td>
                         <td th:text="${task.name}"></td>
                         <td th:text="${task.description}"></td>
-                        <td th:text="${task.deadline}"></td>
+                        <td
+                                th:text="${#temporals.format(task.deadline, 'E, dd MMM yyyy HH:mm')}"></td>
                         <td th:text="${task.status}"></td>
+                        <td>
+                            <a
+                                    th:href="@{/admin/task/edit/{taskId}(taskId=${task.id}, scheduleId=${schedule.id})}"
+                                    class="btn btn-primary btn-sm">
+                                Edit
+                            </a>
+
+                            <form
+                                    th:action="@{/admin/task/delete/{taskId}(taskId=${task.id})}"
+                                    method="DELETE" style="display:inline;"
+                                    onsubmit="return confirm('Are you sure you want to delete this task?');">
+                                <input type="hidden" name="_method" value="DELETE">
+                                <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                            </form>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <!-- Плюсик >-->
+                            <a th:href="@{/admin/task/new(scheduleId=${schedule.id})}"
+                               class="plus-icon">
+                                <i class="bi bi-plus-lg"></i>
+                            </a>
+                        </td>
                     </tr>
                     </tbody>
                 </table>

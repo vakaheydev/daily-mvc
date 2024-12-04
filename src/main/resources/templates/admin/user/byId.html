@@ -21,8 +21,8 @@
             <th>First Name</th>
             <th>Second Name</th>
             <th>Patronymic</th>
+            <th>Telegram ID</th>
             <th>User type</th>
-            <!--            <th>Schedules</th>-->
             <th>Actions</th>
         </tr>
         </thead>
@@ -37,6 +37,7 @@
             <td th:text="${user.firstName}"></td>
             <td th:text="${user.secondName}"></td>
             <td th:text="${user.patronymic}"></td>
+            <td th:text="${user.telegramId != null ? user.telegramId : '-'}"></td>
             <td>
                 <a th:href="@{/admin/user_type/{id}(id=${user.userType.id})}"
                    th:text="${user.userType.name}">
@@ -132,11 +133,18 @@
                     </tbody>
                 </table>
                 <!-- Плюсик >-->
-                <a th:href="@{/admin/task/add(scheduleId=${schedule.id})}" class="plus-icon">
+                <a th:href="@{/admin/task/new(scheduleId=${schedule.id})}" class="plus-icon">
                     <i class="bi bi-plus-lg"></i>
                 </a>
             </td>
-
+        </tr>
+        <tr>
+            <td>
+                <!-- Плюсик >-->
+                <a th:href="@{/admin/schedule/new(userId=${user.id})}" class="plus-icon">
+                    <i class="bi bi-plus-lg"></i>
+                </a>
+            </td>
         </tr>
         </tbody>
     </table>

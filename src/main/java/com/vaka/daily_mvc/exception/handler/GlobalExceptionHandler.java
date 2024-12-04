@@ -1,5 +1,6 @@
 package com.vaka.daily_mvc.exception.handler;
 
+import com.vaka.daily_client.exception.ServerNotRespondingException;
 import com.vaka.daily_mvc.exception.ServerIsNotAliveException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.annotation.Order;
@@ -36,8 +37,8 @@ public class GlobalExceptionHandler {
     }
 
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-    @ExceptionHandler(ServerIsNotAliveException.class)
-    public String handle(ServerIsNotAliveException ex, Model model) {
+    @ExceptionHandler({ServerIsNotAliveException.class, ServerNotRespondingException.class})
+    public String handle(Exception ex, Model model) {
         model.addAttribute("errorMessage", ex.getMessage());
         return "error/serverUnavailable";
     }
