@@ -16,7 +16,7 @@ import java.util.List;
 @Controller
 @Slf4j
 @RequestMapping("/admin/schedule")
-@SessionAttributes("userId")
+@SessionAttributes({"userId", "dbSchedule"})
 public class AdminScheduleController {
     UserService userService;
     ScheduleService scheduleService;
@@ -48,12 +48,16 @@ public class AdminScheduleController {
     public String getPut(@PathVariable("id") Integer id, Model model) {
         Schedule schedule = scheduleService.getById(id);
         model.addAttribute("schedule", schedule);
+        model.addAttribute("dbSchedule", schedule);
 
         return "admin/schedule/edit";
     }
 
     @PutMapping("/edit/{id}")
-    public String put(@PathVariable("id") Integer id, Schedule entity) {
+    public String put(@ModelAttribute("dbSchedule") Schedule dbSchedule, @PathVariable("id") Integer id,
+                      Schedule entity) {
+        entity.setUser(new User(dbSchedule.getUser().getId()));
+        entity.setTasks(dbSchedule.getTasks());
         scheduleService.updateById(id, entity);
 
         return "redirect:/admin/schedule";
@@ -81,7 +85,7 @@ public class AdminScheduleController {
         List<Task> tasks = scheduleService.getById(id).getTasks();
 
         if (!tasks.isEmpty()) {
-            throw new RuntimeException(tasks.size() + " have this schedule");
+            throw new RuntimeException(tasks.size() + " tasks have this schedule");
         }
 
         scheduleService.deleteById(id);
