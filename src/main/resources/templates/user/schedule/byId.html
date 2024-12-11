@@ -3,46 +3,22 @@
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta charset="UTF-8">
-    <title th:text="${user.login}">User login</title>
+    <title th:text="${schedule.name}">Schedule name</title>
     <!-- Подключение Bootstrap CSS -->
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
           rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.5/font/bootstrap-icons.min.css">
     <link th:href="@{/css/plus.css}" rel="stylesheet">
 </head>
 <body>
 <div class="container mt-5">
-    <h1 class="mb-4" th:text="|Hello, ${user.login}! Your ${user.schedules.size()} schedules:|">Greeting
-    </h1>
+    <h1 th:text="|Schedule '${schedule.name}'|"></h1>
     <table class="table table-dark table-striped table-bordered">
         <thead class="thead-dark">
         <tr>
-            <th>№</th>
-            <th>Name</th>
             <th>Tasks</th>
         </tr>
         </thead>
         <tbody>
-        <tr th:each="schedule, stat : ${user.schedules}">
-            <td>
-                <a th:href="@{/user/schedule/{id}(id=${schedule.id})}"
-                   th:text="${stat.count}">
-                </a>
-                <br>
-                <a th:href="@{/user/schedule/edit/{scheduleId}(scheduleId=${schedule.id})}"
-                   class="btn btn-primary btn-sm">
-                    Edit
-                </a>
-                <br>
-
-                <form th:action="@{/user/schedule/delete/{scheduleId}(scheduleId=${schedule.id})}"
-                      th:method="DELETE" style="display:inline;"
-                      onsubmit="return confirm('Are you sure you want to delete this schedule?');">
-                    <input type="hidden" name="_method" value="DELETE">
-                    <button type="submit" class="btn btn-danger btn-sm">Delete</button>
-                </form>
-            </td>
-            <td th:text="${schedule.name}"></td>
             <td>
                 <table class="table table-dark table-striped table-bordered">
                     <thead class="thead-dark">
@@ -67,15 +43,15 @@
                             <td th:case="false">Pending</td>
                         </div>
                         <td>
-                                <a th:href="@{/user/task/edit/{taskId}(taskId=${task.id}, scheduleId=${schedule.id})}"
-                                   class="btn btn-primary btn-sm">
-                                    Edit
-                                </a>
+                            <a th:href="@{/user/task/edit/{taskId}(taskId=${task.id}, scheduleId=${schedule.id})}"
+                               class="btn btn-primary btn-sm">
+                                Edit
+                            </a>
 
                             <form
                                     th:action="@{/user/task/delete/{taskId}(taskId=${task.id})}"
-                                  th:method="DELETE" style="display:inline;"
-                                  onsubmit="return confirm('Are you sure you want to delete this task?');">
+                                    th:method="DELETE" style="display:inline;"
+                                    onsubmit="return confirm('Are you sure you want to delete this task?');">
                                 <input type="hidden" name="_method" value="DELETE">
                                 <button type="submit" class="btn btn-danger btn-sm">Delete</button>
                             </form>
@@ -84,25 +60,14 @@
                     </tbody>
                 </table>
                 <!-- Плюсик >-->
-                    <a th:href="@{/user/task/add(scheduleId=${schedule.id})}" class="plus-icon">
-                        <i class="bi bi-plus-lg"></i>
-                    </a>
-                <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.5/font/bootstrap-icons.min.css">
-            </td>
-
-        </tr>
-        <tr>
-            <td>
-                <!-- Плюсик >-->
-                <a th:href="@{/user/schedule/new(userId=${user.id})}"
-                   class="plus-icon">
+                <a th:href="@{/user/task/add(scheduleId=${schedule.id})}" class="plus-icon">
                     <i class="bi bi-plus-lg"></i>
                 </a>
+                <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.5/font/bootstrap-icons.min.css">
             </td>
-        </tr>
         </tbody>
     </table>
-    <a th:href="@{/}" class="btn btn-primary">Back</a>
+    <a th:href="@{/user/start}" class="btn btn-primary">Back</a>
     <form th:action="@{/authorization/logout}" method="post">
         <button type="submit" class="btn btn-primary">Logout</button>
     </form>
