@@ -1,10 +1,7 @@
 package com.vaka.daily_mvc.controller;
 
-import com.vaka.daily_mvc.service.authorization.AuthorizationService;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -12,19 +9,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 @RequestMapping("/start")
 public class StartController {
-    AuthorizationService authorizationService;
-
-    @Autowired
-    public StartController(AuthorizationService authorizationService) {
-        this.authorizationService = authorizationService;
-    }
-
     @GetMapping
-    public String getStart(@CookieValue(value = "username", required = false) String username) {
-        if (!authorizationService.checkUsername(username)) {
-            return "redirect:/authorization/login";
-        }
-
+    public String getStart() {
         return "redirect:/user/start";
     }
 }

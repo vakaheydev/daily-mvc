@@ -1,6 +1,6 @@
 package com.vaka.daily_mvc.config;
 
-import com.vaka.daily_mvc.handlerinterceptor.ServerAvailabilityInterceptor;
+import com.vaka.daily_mvc.handlerinterceptor.AuthorizationHandlerInterceptor;
 import com.vaka.daily_mvc.model.converter.StringToLocalDateTimeConverter;
 import com.vaka.daily_mvc.model.converter.StringToScheduleListConverter;
 import com.vaka.daily_mvc.model.converter.StringToUserTypeConverter;
@@ -12,12 +12,12 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @Configuration
 public class WebConfig implements WebMvcConfigurer {
-    private final ServerAvailabilityInterceptor interceptor;
+    private final AuthorizationHandlerInterceptor interceptor;
     private final StringToUserTypeConverter stringToUserTypeConverter;
     private final StringToScheduleListConverter stringToScheduleListConverter;
     private final StringToLocalDateTimeConverter stringToLocalDateTimeConverter;
 
-    public WebConfig(ServerAvailabilityInterceptor interceptor, StringToUserTypeConverter stringToUserTypeConverter,
+    public WebConfig(AuthorizationHandlerInterceptor interceptor, StringToUserTypeConverter stringToUserTypeConverter,
                      StringToScheduleListConverter stringToScheduleListConverter,
                      StringToLocalDateTimeConverter stringToLocalDateTimeConverter) {
         this.interceptor = interceptor;
