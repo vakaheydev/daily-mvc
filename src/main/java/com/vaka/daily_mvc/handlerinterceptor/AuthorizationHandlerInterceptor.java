@@ -1,5 +1,6 @@
 package com.vaka.daily_mvc.handlerinterceptor;
 
+import com.vaka.daily_client.model.UserTypes;
 import com.vaka.daily_mvc.service.authorization.AuthorizationService;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
@@ -33,6 +34,10 @@ public class AuthorizationHandlerInterceptor implements HandlerInterceptor {
     private boolean handleCookies(Cookie[] cookies, HttpServletRequest request, HttpServletResponse response) {
         Cookie usernameCookie = null;
 
+        if (cookies == null) {
+            return false;
+        }
+
         for (var cookie : cookies) {
             if (cookie.getName().equals("username")) {
                 usernameCookie = cookie;
@@ -49,12 +54,35 @@ public class AuthorizationHandlerInterceptor implements HandlerInterceptor {
             return false;
         }
 
+        if (!hasAccess(usernameCookie, request)) {
+            sendRedirectToHome(response);
+            return false;
+        }
+
+        return true;
+    }
+
+    private boolean hasAccess(Cookie usernameCookie, HttpServletRequest request) {
+        String requestURI = request.getRequestURI();
+
+        if (requestURI.contains("admin")) {
+            return service.hasRole(usernameCookie.getValue(), UserTypes.ADMIN);
+        }
+
         return true;
     }
 
     private void sendRedirectToLogin(HttpServletRequest request, HttpServletResponse response) {
         try {
             response.sendRedirect("/authorization/login?from=" + request.getRequestURI());
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    private void sendRedirectToHome(HttpServletResponse response) {
+        try {
+            response.sendRedirect("/home");
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

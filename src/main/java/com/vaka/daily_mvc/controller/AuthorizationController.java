@@ -21,7 +21,7 @@ public class AuthorizationController {
 
     @GetMapping("/login")
     public String getLogin(
-            @RequestParam("from") String fromURI,
+            @RequestParam(value = "from", defaultValue = "/") String fromURI,
             HttpServletRequest request,
             HttpServletResponse response) {
         addDeletableCookie("username", response);

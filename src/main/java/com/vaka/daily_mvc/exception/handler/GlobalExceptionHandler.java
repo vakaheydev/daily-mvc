@@ -56,7 +56,7 @@ public class GlobalExceptionHandler {
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(RuntimeException.class)
     public String handle(RuntimeException ex, Model model) {
-        log.error("Runtime exception: {}", ex.getMessage());
+        log.error("Runtime exception: {}", ex.getStackTrace());
         model.addAttribute("errorMsg", ex.getMessage());
         model.addAttribute("errorName", "Error");
 
