@@ -1,18 +1,18 @@
 package com.vaka.daily_mvc.controller.admin;
 
+import com.vaka.daily_mvc.model.dto.TaskDto;
 import com.vaka.daily_mvc.service.TaskService;
 import com.vaka.daily_client.model.Task;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @Controller
 @RequestMapping("/admin/task")
-public class AdminTaskController implements AdminController<Task> {
+@SessionAttributes("scheduleId")
+public class AdminTaskController {
     TaskService service;
 
     public AdminTaskController(TaskService service) {
@@ -20,7 +20,6 @@ public class AdminTaskController implements AdminController<Task> {
     }
 
     @GetMapping
-    @Override
     public String get(Model model) {
         List<Task> tasks = service.getAll();
         model.addAttribute("tasks", tasks);
@@ -29,7 +28,6 @@ public class AdminTaskController implements AdminController<Task> {
     }
 
     @GetMapping("/{id}")
-    @Override
     public String getById(@PathVariable("id") Integer id, Model model) {
         Task task = service.getById(id);
         model.addAttribute("task", task);
@@ -37,18 +35,46 @@ public class AdminTaskController implements AdminController<Task> {
         return "/admin/task/byId";
     }
 
-    @Override
-    public String put(Integer id, Task entity) {
-        return null;
+    @GetMapping("/edit/{id}")
+    public String getPut(Model model, @PathVariable("id") Integer taskId) {
+        Task task = service.getById(taskId);
+
+        model.addAttribute("task", task);
+        model.addAttribute("scheduleId", task.getScheduleId());
+        model.addAttribute("deadline", task.getDeadline());
+
+        return "/admin/task/edit";
     }
 
-    @Override
-    public String post(Task entity) {
-        return null;
+    @PutMapping("/edit/{id}")
+    public String put(@PathVariable("id") Integer id, Task entity, @ModelAttribute("scheduleId") int scheduleId) {
+        entity.setScheduleId(scheduleId);
+        service.updateById(id, entity);
+
+        return "redirect:/admin/schedule/" + scheduleId;
     }
 
-    @Override
-    public String delete(Integer id) {
-        return null;
+    @GetMapping("/new")
+    public String getPost(Model model, @RequestParam("scheduleId") int scheduleId) {
+        TaskDto task = new TaskDto();
+
+        model.addAttribute("task", task);
+        model.addAttribute("scheduleId", scheduleId);
+        return "/admin/task/add";
+    }
+
+    @PostMapping("/new")
+    public String post(Task entity, @ModelAttribute("scheduleId") Integer scheduleId) {
+        entity.setScheduleId(scheduleId);
+        service.create(entity);
+
+        return "redirect:/admin/schedule/" + scheduleId;
+    }
+
+    @DeleteMapping("/delete/{id}")
+    public String delete(@PathVariable("id") Integer id) {
+        service.deleteById(id);
+
+        return "redirect:/admin/schedule";
     }
 }
