@@ -12,8 +12,7 @@
 </head>
 <body>
 <div class="container mt-5">
-    <h1 class="mb-4" th:text="|Hello, ${user.login}! Your ${user.schedules.size()} schedules:|">Greeting
-    </h1>
+    <h1 class="mb-4" th:text="|Hello, ${user.login}! Your ${user.schedules.size()} ${user.schedules.size() == 1 ? 'schedule' : 'schedules'}:|">Greeting</h1>
     <table class="table table-dark table-striped table-bordered">
         <thead class="thead-dark">
         <tr>

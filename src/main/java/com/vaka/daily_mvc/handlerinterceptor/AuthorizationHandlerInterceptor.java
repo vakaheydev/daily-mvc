@@ -89,7 +89,7 @@ public class AuthorizationHandlerInterceptor implements HandlerInterceptor {
     }
 
     private boolean isValidUsernameCookie(Cookie usernameCookie) {
-        return service.checkUsername(usernameCookie.getValue());
+        return service.existsUser(usernameCookie.getValue());
     }
 
     private boolean isAuthorizationNeeded(HttpServletRequest request) {

@@ -36,7 +36,7 @@ public class SimpleAuthorizationService implements AuthorizationService {
     }
 
     @Override
-    public boolean checkUsername(String login) {
+    public boolean existsUser(String login) {
         if (login == null || login.isEmpty()) {
             return false;
         }

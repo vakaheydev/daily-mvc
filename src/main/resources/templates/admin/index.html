@@ -56,6 +56,9 @@
             <a href="/admin/task" class="btn btn-primary btn-block">Manage Tasks</a>
         </div>
     </div>
+    <form th:action="@{/authorization/logout}" method="post">
+        <button type="submit" class="btn btn-primary">Logout</button>
+    </form>
     <a th:href="@{/}" class="btn btn-primary">Back</a>
 </div>
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>

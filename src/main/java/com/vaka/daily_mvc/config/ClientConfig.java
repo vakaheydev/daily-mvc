@@ -37,4 +37,9 @@ public class ClientConfig {
     public TaskClient taskClient() {
         return new TaskRestClient(restClient);
     }
+
+    @Bean
+    public TaskTypeClient taskTypeClient() {
+        return new TaskTypeRestClient(restClient);
+    }
 }

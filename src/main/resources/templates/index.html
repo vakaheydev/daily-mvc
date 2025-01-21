@@ -3,7 +3,6 @@
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>Vaka Daily</title>
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
           rel="stylesheet">
@@ -27,6 +26,7 @@
 </head>
 <body>
 <div class="center-content">
+    <h3 th:if="${username}" th:text="|Hello, ${username}!|"></h3>
     <h1 class="h1">Vaka Daily</h1>
     <a href="/start" class="btn btn-primary">Start</a>
     <a href="/admin" class="btn btn-primary">Admin</a>

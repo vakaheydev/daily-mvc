@@ -7,6 +7,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 @Controller
@@ -34,13 +35,21 @@ public class AuthorizationController {
     public String postLogin(@RequestParam("username") String username,
                             @RequestParam("password") String password,
                             @SessionAttribute("fromURI") String fromURI,
-                            HttpServletResponse response) {
+                            HttpServletResponse response,
+                            Model model) {
         UserDto userDto = UserDto.builder()
                 .login(username)
                 .password(password)
                 .build();
 
+        if (!service.existsUser(username)) {
+            model.addAttribute("loginError", "No such user");
+            return "authorization/login";
+        }
+
         if (!service.authorize(userDto)) {
+            model.addAttribute("username", username);
+            model.addAttribute("passwordError", "Wrong password");
             return "authorization/login";
         }
 

@@ -3,9 +3,11 @@ package com.vaka.daily_mvc.controller.user;
 import com.vaka.daily_mvc.model.dto.TaskDto;
 import com.vaka.daily_mvc.service.TaskService;
 import com.vaka.daily_client.model.Task;
+import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 @Controller
@@ -29,7 +31,13 @@ public class TaskController {
     }
 
     @PostMapping("/add")
-    public String saveTask(Model model, @ModelAttribute("task") Task task) {
+    public String saveTask(Model model,
+                           @Valid @ModelAttribute("task") Task task,
+                           BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            return "user/task/add";
+        }
+
         Integer scheduleId = (Integer) model.getAttribute("scheduleId");
 
         task.setScheduleId(scheduleId);
