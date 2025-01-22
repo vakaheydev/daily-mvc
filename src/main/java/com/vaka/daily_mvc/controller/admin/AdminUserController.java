@@ -1,10 +1,10 @@
 package com.vaka.daily_mvc.controller.admin;
 
+import com.vaka.daily_client.model.User;
+import com.vaka.daily_client.model.UserType;
 import com.vaka.daily_mvc.model.dto.UserDto;
 import com.vaka.daily_mvc.service.UserService;
 import com.vaka.daily_mvc.service.UserTypeService;
-import com.vaka.daily_client.model.User;
-import com.vaka.daily_client.model.UserType;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -12,7 +12,6 @@ import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Comparator;
 import java.util.List;
 
 @Controller
@@ -31,8 +30,6 @@ public class AdminUserController {
     @GetMapping
     public String get(Model model) {
         List<User> users = userService.getAll();
-        users.sort(Comparator.comparingInt(User::getId));
-
         model.addAttribute("users", users);
 
         return "admin/user/index";
@@ -41,16 +38,14 @@ public class AdminUserController {
     @GetMapping("/{id}")
     public String getById(@PathVariable("id") Integer id, Model model) {
         User user = userService.getById(id);
-
         model.addAttribute("user", user);
 
         return "admin/user/byId";
     }
 
     @GetMapping("/search")
-    public String getById(@RequestParam("login") String login, Model model) {
+    public String getByLogin(@RequestParam("login") String login, Model model) {
         User user = userService.getByUniqueName(login);
-
         model.addAttribute("user", user);
 
         return "admin/user/byId";

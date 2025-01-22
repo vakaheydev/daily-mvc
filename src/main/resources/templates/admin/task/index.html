@@ -12,31 +12,7 @@
 <div class="container mt-5">
     <a th:href="@{/admin}" class="btn btn-primary">Back to admin</a>
     <h1 class="mb-4">Tasks</h1>
-    <table class="table table-dark table-striped table-bordered">
-        <!--        <thead class="thead-dark">-->
-        <tr>
-            <th>ID</th>
-            <th>Name</th>
-            <th>Description</th>
-            <th>Deadline</th>
-            <th>Status</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr th:each="task : ${tasks}">
-            <td>
-                <a th:href="@{/admin/task/{id}(id=${task.id})}"
-                   class="text-decoration-none">
-                    <p th:text="${task.id}"></p>
-                </a>
-            </td>
-            <td th:text="${task.name}"></td>
-            <td th:text="${task.description}"></td>
-            <td th:text="${#temporals.format(task.deadline, 'E, dd MMM yyyy HH:mm')}"></td>
-            <td th:text="${task.status}"></td>
-        </tr>
-        </tbody>
-    </table>
+    <div th:replace="~{admin/fragments/task/all-task-table-no-btn :: taskTable(${tasks})}"></div>
 </div>
 <!-- Подключение Bootstrap JS и jQuery -->
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>

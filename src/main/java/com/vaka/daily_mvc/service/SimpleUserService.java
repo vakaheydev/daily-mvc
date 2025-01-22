@@ -20,6 +20,30 @@ public class SimpleUserService extends AbstractService<User> implements UserServ
     }
 
     @Override
+    public List<User> getAll() {
+        List<User> users = super.getAll();
+        users.forEach(user -> setUserToSchedules(user.getSchedules(), user));
+
+        return users;
+    }
+
+    @Override
+    public User getById(Integer id) {
+        User user = super.getById(id);
+        setUserToSchedules(user.getSchedules(), user);
+
+        return user;
+    }
+
+    @Override
+    public User getByUniqueName(String name) {
+        User user = super.getByUniqueName(name);
+        setUserToSchedules(user.getSchedules(), user);
+
+        return user;
+    }
+
+    @Override
     public User updateById(Integer id, User entity) {
         if (entity.getSchedules() == null) {
             List<Schedule> schedules = userClient.getById(id).getSchedules();
@@ -51,5 +75,9 @@ public class SimpleUserService extends AbstractService<User> implements UserServ
     @Override
     public Client<User> getClient() {
         return userClient;
+    }
+
+    private void setUserToSchedules(List<Schedule> schedules, User user) {
+        schedules.forEach(x -> x.setUser(user));
     }
 }

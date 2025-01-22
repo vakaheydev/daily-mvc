@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.servlet.resource.NoResourceFoundException;
 
+import java.util.Arrays;
+
 @ControllerAdvice
 @Slf4j
 @Order(value = 1000000)
@@ -29,7 +31,7 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public String handle(MethodArgumentNotValidException ex, Model model) {
-        log.error("Argument mismatch: {}", ex.getFieldError());
+        log.error("Argument mismatch", ex);
         model.addAttribute("errorMsg", "Argument mismatch: " + ex.getFieldError());
         model.addAttribute("errorName", "MethodArgumentNotValidException");
 
@@ -46,7 +48,7 @@ public class GlobalExceptionHandler {
     @ResponseStatus(HttpStatus.METHOD_NOT_ALLOWED)
     @ExceptionHandler(HttpRequestMethodNotSupportedException.class)
     public String handle(HttpRequestMethodNotSupportedException ex, Model model) {
-        log.error("Incorrect HTTP method: {}", ex.getMessage());
+        log.error("Incorrect HTTP method", ex);
         model.addAttribute("errorMsg", "Method not allowed: " + ex.getMethod());
         model.addAttribute("errorName", "HttpRequestMethodNotSupportedException");
 
@@ -56,7 +58,7 @@ public class GlobalExceptionHandler {
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(RuntimeException.class)
     public String handle(RuntimeException ex, Model model) {
-        log.error("Runtime exception: {}", ex.getStackTrace());
+        log.error("Runtime exception", ex);
         model.addAttribute("errorMsg", ex.getMessage());
         model.addAttribute("errorName", "Error");
 
@@ -66,7 +68,7 @@ public class GlobalExceptionHandler {
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     @ExceptionHandler(Exception.class)
     public String handle(Exception ex) {
-        log.error("Unexpected Error: {}", ex.toString());
+        log.error("Unexpected Error", ex);
         return "error/unexpectedError";
     }
 }

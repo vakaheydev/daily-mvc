@@ -1,8 +1,8 @@
 package com.vaka.daily_mvc.controller.admin;
 
+import com.vaka.daily_client.model.Task;
 import com.vaka.daily_mvc.model.dto.TaskDto;
 import com.vaka.daily_mvc.service.TaskService;
-import com.vaka.daily_client.model.Task;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;

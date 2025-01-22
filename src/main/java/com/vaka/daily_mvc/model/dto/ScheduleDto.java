@@ -7,7 +7,7 @@ import java.util.List;
 public class ScheduleDto {
     private Integer id;
     private String name;
-    private UserDto userDto;
+    private UserDto user;
     private List<Task> tasks;
 
     public ScheduleDto() {
@@ -16,7 +16,7 @@ public class ScheduleDto {
     public ScheduleDto(Integer id, String name, UserDto userDto, List<Task> tasks) {
         this.id = id;
         this.name = name;
-        this.userDto = userDto;
+        this.user = userDto;
         this.tasks = tasks;
     }
 
@@ -36,12 +36,12 @@ public class ScheduleDto {
         this.name = name;
     }
 
-    public UserDto getUserDto() {
-        return userDto;
+    public UserDto getUser() {
+        return user;
     }
 
-    public void setUserDto(UserDto userDto) {
-        this.userDto = userDto;
+    public void setUser(UserDto user) {
+        this.user = user;
     }
 
     public List<Task> getTasks() {
