@@ -9,6 +9,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class AdminController {
     @GetMapping
     public String get() {
-        return "/admin/index";
+        return "admin/index";
     }
 }

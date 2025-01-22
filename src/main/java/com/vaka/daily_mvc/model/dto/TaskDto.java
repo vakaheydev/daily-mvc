@@ -1,6 +1,7 @@
 package com.vaka.daily_mvc.model.dto;
 
 import com.vaka.daily_client.model.Schedule;
+import com.vaka.daily_client.model.TaskType;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -25,6 +26,7 @@ public class TaskDto {
 
     private Boolean status;
     private Schedule schedule;
+    private TaskType taskType;
 
     @Override
     public String toString() {
@@ -42,6 +44,7 @@ public class TaskDto {
             sb.append(String.format("%s)", schedule.getName()));
         }
 
+        sb.append(String.format(", taskType=%s", taskType));
         sb.append("}");
 
         return sb.toString();
