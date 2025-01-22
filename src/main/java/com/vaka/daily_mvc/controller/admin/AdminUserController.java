@@ -2,7 +2,6 @@ package com.vaka.daily_mvc.controller.admin;
 
 import com.vaka.daily_client.model.User;
 import com.vaka.daily_client.model.UserType;
-import com.vaka.daily_mvc.model.dto.UserDto;
 import com.vaka.daily_mvc.service.UserService;
 import com.vaka.daily_mvc.service.UserTypeService;
 import lombok.extern.slf4j.Slf4j;
@@ -53,14 +52,14 @@ public class AdminUserController {
 
     @GetMapping("/new")
     public String newUser(Model model) {
-        model.addAttribute("user", new UserDto());
+        model.addAttribute("user", new User());
         model.addAttribute("userTypes", getUserTypeNames());
 
         return "admin/user/new";
     }
 
     @PostMapping("/new")
-    public String post(UserDto entity) {
+    public String post(User entity) {
         userService.create(entity);
 
         return "redirect:/admin/user";

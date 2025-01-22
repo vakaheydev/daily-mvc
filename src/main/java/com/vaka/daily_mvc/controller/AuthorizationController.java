@@ -1,6 +1,6 @@
 package com.vaka.daily_mvc.controller;
 
-import com.vaka.daily_mvc.model.dto.UserDto;
+import com.vaka.daily_client.model.User;
 import com.vaka.daily_mvc.service.authorization.AuthorizationService;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
@@ -37,7 +37,7 @@ public class AuthorizationController {
                             @SessionAttribute("fromURI") String fromURI,
                             HttpServletResponse response,
                             Model model) {
-        UserDto userDto = UserDto.builder()
+        User user = User.builder()
                 .login(username)
                 .password(password)
                 .build();
@@ -47,7 +47,7 @@ public class AuthorizationController {
             return "authorization/login";
         }
 
-        if (!service.authorize(userDto)) {
+        if (!service.authorize(user)) {
             model.addAttribute("username", username);
             model.addAttribute("passwordError", "Wrong password");
             return "authorization/login";
