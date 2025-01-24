@@ -12,7 +12,7 @@
 <div class="container mt-5">
     <a th:href="@{/admin}" class="btn btn-primary">Back to admin</a>
     <h1 class="mb-4">Tasks</h1>
-    <div th:replace="~{admin/fragments/task/all-task-table-no-btn :: taskTable(${tasks})}"></div>
+    <div th:replace="~{admin/fragments/task/all-task-table :: taskTable(${tasks})}"></div>
 </div>
 <!-- Подключение Bootstrap JS и jQuery -->
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>

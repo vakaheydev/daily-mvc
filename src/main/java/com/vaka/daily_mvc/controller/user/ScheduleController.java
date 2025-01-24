@@ -28,7 +28,7 @@ public class ScheduleController {
         Schedule schedule = scheduleService.getById(id);
         model.addAttribute("schedule", schedule);
 
-        return "/user/schedule/byId";
+        return "user/schedule/byId";
     }
 
     @GetMapping("/edit/{id}")
@@ -37,7 +37,7 @@ public class ScheduleController {
         model.addAttribute("schedule", schedule);
         model.addAttribute("dbSchedule", schedule);
 
-        return "/user/schedule/edit";
+        return "user/schedule/edit";
     }
 
     @PutMapping("/edit/{id}")
@@ -55,7 +55,7 @@ public class ScheduleController {
         model.addAttribute("schedule", new Schedule());
         model.addAttribute("userId", userId);
 
-        return "/user/schedule/new";
+        return "user/schedule/new";
     }
 
     @PostMapping("/new")

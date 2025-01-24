@@ -14,53 +14,7 @@
 <div class="container mt-5">
     <a th:href="@{/admin/user}" class="btn btn-primary">Back</a>
     <h1 class="mb-4">User</h1>
-    <table class="table table-dark table-striped table-bordered">
-        <thead class="thead-dark">
-        <tr>
-            <th>ID</th>
-            <th>Login</th>
-            <th>First Name</th>
-            <th>Second Name</th>
-            <th>Patronymic</th>
-            <th>Telegram ID</th>
-            <th>User type</th>
-            <th>Actions</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr>
-            <td>
-                <a th:href="@{/admin/user/{id}(id=${user.id})}" class="text-decoration-none">
-                    <p th:text="${user.id}"></p>
-                </a>
-            </td>
-            <td th:text="${user.login}"></td>
-            <td th:text="${user.firstName}"></td>
-            <td th:text="${user.secondName}"></td>
-            <td th:text="${user.patronymic}"></td>
-            <td th:text="${user.telegramId != null ? user.telegramId : '-'}"></td>
-            <td>
-                <a th:href="@{/admin/user_type/{id}(id=${user.userType.id})}"
-                   th:text="${user.userType.name}">
-                </a>
-            </td>
-            <td>
-                <a th:href="@{/admin/user/edit/{id}(id=${user.id})}"
-                   class="btn btn-primary btn-sm">
-                    Edit
-                </a>
-
-                <form
-                        th:action="@{/admin/user/delete/{id}(id=${user.id})}"
-                        th:method="DELETE" style="display:inline;"
-                        onsubmit="return confirm('Are you sure you want to delete this user?');">
-                    <input type="hidden" name="_method" value="DELETE">
-                    <button type="submit" class="btn btn-danger btn-sm">Delete</button>
-                </form>
-            </td>
-        </tr>
-        </tbody>
-    </table>
+    <div th:replace="~{admin/fragments/user/user-table :: userTable(${user})}"></div>
     <h1 class="mb-4">Schedules</h1>
     <div th:replace="~{admin/fragments/schedule/all-schedule-table :: scheduleTable(${user.schedules})}"></div>
 </div>
