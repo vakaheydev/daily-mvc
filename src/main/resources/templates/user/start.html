@@ -50,6 +50,7 @@
                         <th>Name</th>
                         <th>Description</th>
                         <th>Deadline</th>
+                        <th>Task type</th>
                         <th>Status</th>
                     </tr>
                     </thead>
@@ -61,9 +62,10 @@
                         <td th:text="${task.name}"></td>
                         <td th:text="${task.description}"></td>
                         <td th:text="${#temporals.format(task.deadline, 'E, dd MMM yyyy HH:mm')}"></td>
+                        <td th:text="${#strings.capitalize(task.taskType.name)}"> </td>
                         <div th:switch="${task.status}">
-                            <td th:case="true">Completed</td>
-                            <td th:case="false">Pending</td>
+                            <td th:case="true">Done</td>
+                            <td th:case="false">Not done</td>
                         </div>
                         <td>
                                 <a th:href="@{/user/task/edit/{taskId}(taskId=${task.id}, scheduleId=${schedule.id})}"

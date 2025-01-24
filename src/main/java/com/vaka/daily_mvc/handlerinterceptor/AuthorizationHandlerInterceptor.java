@@ -35,6 +35,7 @@ public class AuthorizationHandlerInterceptor implements HandlerInterceptor {
         Cookie usernameCookie = null;
 
         if (cookies == null) {
+            sendRedirectToLogin(request, response);
             return false;
         }
 
