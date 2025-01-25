@@ -1,0 +1,11 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+<body>
+<div th:fragment="icon(title, icon, url)">
+    <a th:href="${url}" th:title="${title}">
+        <img th:src="@{${icon}}" class="icon" alt="Галочка" style="width: 50px; height: 50px; margin-bottom: 10px; background-color: transparent;">
+    </a>
+</div>
+</body>
+</html>

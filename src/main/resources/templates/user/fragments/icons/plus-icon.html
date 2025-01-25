@@ -1,0 +1,9 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+<body>
+<div th:fragment="icon(hurl)">
+    <div th:replace="~{user/fragments/icons/icon :: icon(title='Добавить', icon='/images/plus-icon.png', url=${hurl})}"></div>
+</div>
+</body>
+</html>

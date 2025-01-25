@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+<body>
+<div th:fragment="taskTable(schedule)">
+    <table class="table table-dark table-striped table-bordered">
+        <thead class="thead-dark">
+        <tr>
+            <th>№</th>
+            <th>Name</th>
+            <th>Description</th>
+            <th>Deadline</th>
+            <th>Task type</th>
+            <th>Status</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="task, taskStat : ${schedule.tasks}">
+            <td>
+                <p th:text="${taskStat.count}"></p>
+            </td>
+            <td th:text="${task.name}"></td>
+            <td th:text="${task.description}"></td>
+            <td th:text="${#temporals.format(task.deadline, 'E, dd MMM yyyy HH:mm')}"></td>
+            <td th:text="${#strings.capitalize(task.taskType.name)}"> </td>
+            <div th:switch="${task.status}">
+                <td th:case="true">Done</td>
+                <td th:case="false">Not done</td>
+            </div>
+            <td>
+                <div th:replace="~{user/fragments/task-btns :: taskBtns}"></div>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <div th:replace="~{user/fragments/icons/plus-icon :: icon(hurl='/user/task/add?scheduleId=' + ${schedule.id})}"></div>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>

@@ -14,6 +14,26 @@ public class SimpleScheduleService extends AbstractService<Schedule> implements 
     }
 
     @Override
+    public Schedule updateById(Integer id, Schedule entity) {
+        if (entity.getName().equals("main")) {
+            throw new UnsupportedOperationException("Main schedule can't be renamed");
+        }
+
+        return super.updateById(id, entity);
+    }
+
+    @Override
+    public void deleteById(Integer id) {
+        Schedule schedule = client.getById(id);
+
+        if (schedule.getName().equals("main")) {
+            throw new UnsupportedOperationException("Main schedule can't be deleted");
+        }
+
+        super.deleteById(id);
+    }
+
+    @Override
     public Client<Schedule> getClient() {
         return client;
     }

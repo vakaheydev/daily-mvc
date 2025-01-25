@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+<body>
+<div th:fragment="userTable(user)">
+    <style>
+        select {
+            padding: 10px;
+            font-size: 16px;
+            background-color: #f2f2f2;
+            border: 2px solid #ddd;
+            border-radius: 4px;
+            width: 200px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        select:focus {
+            border-color: #4CAF50;
+            background-color: #fff;
+        }
+
+        option {
+            padding: 10px;
+        }
+    </style>
+
+
+
+    <div style="display: flex; flex-direction: row; align-items: flex-start; gap: 10px;">
+        <select onchange="window.location.href=this.value;">
+            <option value="" disabled selected>Select schedule</option>
+            <th:block th:each="scheduleItem : ${user.schedules}">
+                <option th:value="@{'/user/start?scheduleName=' + ${scheduleItem.name}}"
+                        th:text="${scheduleItem.name}"
+                        th:selected="${scheduleItem.name == schedule.name}">
+                </option>
+            </th:block>
+        </select>
+
+        <div th:replace="~{user/fragments/icons/plus-icon :: icon(hurl='/user/schedule/new?userId=' + ${user.id})}"></div>
+        <div th:replace="~{user/fragments/icons/icon :: icon(title='Изменить', icon='/images/edit-icon.png', url='/user/schedule/edit/' + ${schedule.id})}" />
+
+        <form th:action="@{/user/schedule/delete/{scheduleId}(scheduleId=${schedule.id})}"
+              th:method="DELETE" style="display:inline;"
+              onsubmit="return confirm('Are you sure you want to delete this schedule?');">
+            <input type="hidden" name="_method" value="DELETE">
+            <button type="submit" style="border: none; background: none;" th:title="Удалить">
+                <img th:src="@{/images/delete-icon.png}" alt="Delete" style="width: 50px; height: 50px; margin-bottom: 10px;  background-color: transparent;">
+            </button>
+        </form>
+    </div>
+
+    <div th:replace="~{user/fragments/task-table :: taskTable(${schedule})}"></div>
+</div>
+</body>
+</html>
