@@ -13,6 +13,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Comparator;
+import java.util.List;
 
 @Controller
 @RequestMapping("/user")
@@ -54,6 +55,17 @@ public class UserController {
 
         model.addAttribute("user", user);
         model.addAttribute("schedule", schedule);
+
+        List<Task> completedTask = schedule.getTasks().stream()
+                .filter(Task::getStatus)
+                .toList();
+
+        List<Task> uncompletedTask = schedule.getTasks().stream()
+                .filter(x -> !x.getStatus())
+                .toList();
+
+        model.addAttribute("uncompleted", uncompletedTask);
+        model.addAttribute("completed", completedTask);
 
         return "user/start";
     }

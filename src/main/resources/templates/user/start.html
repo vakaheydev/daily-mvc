@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
+    <div th:replace="~{user/fragments/task-btns :: modalBtnHead}"></div>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta charset="UTF-8">
     <title th:text="${user.login}">User login</title>
@@ -12,13 +13,15 @@
 <body>
 <div class="container mt-5">
     <h1 class="mb-4" th:text="|Hello, ${user.login}! Your ${schedule.name} schedule|">Greeting</h1>
-    <div th:replace="~{user/fragments/user-table :: userTable(${user})}"></div>
+    <div th:replace="~{user/fragments/user-table :: userTable(user=${user}, completed=${completed}, uncompleted=${uncompleted})}"></div>
     <a th:href="@{/}" class="btn btn-primary" style="margin-bottom: 10px;">Back</a>
     <form th:action="@{/authorization/logout}" method="post">
         <button type="submit" class="btn btn-primary">Logout</button>
     </form>
 </div>
 <!-- Подключение Bootstrap JS и jQuery -->
+<div th:replace="~{user/fragments/task-btns :: taskBtnScript}"></div>
+<div th:replace="~{user/fragments/user-table :: scheduleDeleteBtnScript}"></div>
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
