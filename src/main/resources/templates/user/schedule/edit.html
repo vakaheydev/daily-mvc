@@ -10,7 +10,7 @@
 </head>
 <body>
 <div class="container mt-5">
-    <h1 class="mb-4">New user type</h1>
+    <h1 class="mb-4">Edit schedule</h1>
     <form th:action="@{/user/schedule/edit/{id}(id=${schedule.id})}"
           th:object="${schedule}"
           th:method="PUT">

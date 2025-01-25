@@ -3,6 +3,7 @@ package com.vaka.daily_mvc.controller.user;
 import com.vaka.daily_client.exception.ScheduleNotFoundException;
 import com.vaka.daily_client.exception.UserNotFoundException;
 import com.vaka.daily_client.model.Schedule;
+import com.vaka.daily_client.model.Task;
 import com.vaka.daily_mvc.service.UserService;
 import com.vaka.daily_client.model.User;
 import lombok.extern.slf4j.Slf4j;
@@ -10,6 +11,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Comparator;
 
 @Controller
 @RequestMapping("/user")
@@ -23,17 +26,31 @@ public class UserController {
     }
 
     @GetMapping("/start")
-    public String getStart(@RequestParam(required = false, name = "scheduleName", defaultValue = "main") String scheduleName, @CookieValue(value = "username", defaultValue = "") String username, Model model) {
+    public String getStart(@RequestParam(required = false, name = "scheduleId") Integer scheduleId, @CookieValue(value = "username", defaultValue = "") String username, Model model) {
         if (username.equals(" ")) {
             return "redirect:authorization/login";
         }
 
         User user = userService.getByUniqueName(username);
 
-        Schedule schedule = user.getSchedules().stream()
-                .filter(x -> x.getName().equals(scheduleName))
-                .findFirst()
-                .orElseThrow(() -> new ScheduleNotFoundException(scheduleName));
+        Schedule schedule;
+
+        if (scheduleId == null) {
+            schedule = user.getSchedules().stream()
+                    .filter(x -> x.getName().equals("main"))
+                    .findFirst()
+                    .orElseThrow(() -> new ScheduleNotFoundException("main"));
+        } else {
+            schedule = user.getSchedules().stream()
+                    .filter(x -> x.getId().equals(scheduleId))
+                    .findFirst()
+                    .orElseThrow(() -> new ScheduleNotFoundException(scheduleId));
+        }
+
+        schedule.setTasks(schedule.getTasks().stream()
+                .sorted(Comparator.comparingInt(Task::getId))
+                .toList()
+        );
 
         model.addAttribute("user", user);
         model.addAttribute("schedule", schedule);

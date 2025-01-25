@@ -28,7 +28,7 @@
                 <td th:case="false">Not done</td>
             </div>
             <td>
-                <div th:replace="~{user/fragments/task-btns :: taskBtns}"></div>
+                <div th:replace="~{user/fragments/task-btns :: taskBtns(${task})}"></div>
             </td>
         </tr>
         <tr>

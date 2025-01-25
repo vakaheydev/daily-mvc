@@ -2,18 +2,23 @@
 <html lang="en"
       xmlns:th="http://www.thymeleaf.org">
 <body>
-    <div th:fragment="taskBtns">
+    <div th:fragment="taskBtns(task)">
         <div style="display: flex; flex-direction: column; align-items: center; gap: 10px;">
-
-            <div th:replace="~{user/fragments/icons/icon :: icon(title='Готово', icon='/images/done-icon.png', url='/user/task/edit/{taskId}?taskId=' + ${task.id} + '&scheduleId=' + ${schedule.id})}" />
+            <div th:if="${task.status == false}">
+                <form th:action="@{/user/task/done/{taskId}(taskId=${task.id})}"
+                      th:method="PATCH" style="display:inline;">
+                    <button type="submit" style="border: none; background: none;" th:title="Готово">
+                        <img th:src="@{/images/done-icon.png}" alt="Delete" style="width: 50px; height: 50px; margin-bottom: 10px;  background-color: transparent;">
+                    </button>
+                </form>
+            </div>
             <div th:replace="~{user/fragments/icons/icon :: icon(title='Изменить', icon='/images/edit-icon.png', url='/user/task/edit/' + ${task.id} + '?scheduleId=' + ${schedule.id})}" />
 
             <form th:action="@{/user/task/delete/{taskId}(taskId=${task.id})}"
                   th:method="DELETE" style="display:inline;"
                   onsubmit="return confirm('Are you sure you want to delete this task?');">
-                <input type="hidden" name="_method" value="DELETE">
                 <button type="submit" style="border: none; background: none;" th:title="Удалить">
-                    <img th:src="@{/images/delete-icon.png}" alt="Delete" style="width: 50px; height: 50px; margin-bottom: 10px;  background-color: transparent;">
+                    <img th:src="@{/images/delete-icon.png}" alt="Delete" style="width: 50px; height: 50px; margin-bottom: 10px; background-color: transparent;">
                 </button>
             </form>
         </div>

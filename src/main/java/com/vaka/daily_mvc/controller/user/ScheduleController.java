@@ -47,7 +47,7 @@ public class ScheduleController {
         entity.setTasks(dbSchedule.getTasks());
         scheduleService.updateById(id, entity);
 
-        return "redirect:/user/start";
+        return "redirect:/user/start?scheduleId=" + entity.getId();
     }
 
     @GetMapping("/new")
@@ -62,9 +62,9 @@ public class ScheduleController {
     public String post(@ModelAttribute("userId") Integer userId, Schedule entity) {
         User user = userService.getById(userId);
         entity.setUser(user);
-        scheduleService.create(entity);
+        Schedule created = scheduleService.create(entity);
 
-        return "redirect:/user/start";
+        return "redirect:/user/start?scheduleId=" + created.getId();
     }
 
     @DeleteMapping("/delete/{id}")
@@ -72,7 +72,7 @@ public class ScheduleController {
         List<Task> tasks = scheduleService.getById(id).getTasks();
 
         if (!tasks.isEmpty()) {
-            throw new RuntimeException(tasks.size() + " tasks have this schedule");
+            throw new RuntimeException("This schedule has " + tasks.size() + " tasks. Delete them first");
         }
 
         scheduleService.deleteById(id);

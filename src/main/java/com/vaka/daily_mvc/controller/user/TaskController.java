@@ -54,7 +54,7 @@ public class TaskController {
         task.setScheduleId(scheduleId);
         taskService.create(task);
 
-        return "redirect:/user/start";
+        return "redirect:/user/start?scheduleId=" + task.getScheduleId();
     }
 
     @GetMapping("/edit/{id}")
@@ -69,18 +69,29 @@ public class TaskController {
         return "user/task/edit";
     }
 
+    @PatchMapping("/done/{id}")
+    public String patchDoneTask(@PathVariable("id") Integer id) {
+        Task task = taskService.getById(id);
+        task.setStatus(true);
+
+        taskService.updateById(id, task);
+
+        return "redirect:/user/start?scheduleId=" + task.getScheduleId();
+    }
+
     @PutMapping("/edit/{id}")
     public String putEditTask(@PathVariable("id") Integer id, Task task, @RequestParam("scheduleId") int scheduleId) {
         task.setScheduleId(scheduleId);
         taskService.updateById(id, task);
 
-        return "redirect:/user/start";
+        return "redirect:/user/start?scheduleId=" + scheduleId;
     }
 
     @DeleteMapping({"/delete/{id}"})
     public String deleteTask(@PathVariable("id") Integer id) {
+        Integer scheduleId = taskService.getById(id).getScheduleId();
         taskService.deleteById(id);
 
-        return "redirect:/user/start";
+        return "redirect:/user/start?scheduleId=" + scheduleId;
     }
 }
