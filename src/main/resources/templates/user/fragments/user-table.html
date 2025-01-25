@@ -39,16 +39,19 @@
         </select>
 
         <div th:replace="~{user/fragments/icons/plus-icon :: icon(hurl='/user/schedule/new?userId=' + ${user.id})}"></div>
-        <div th:replace="~{user/fragments/icons/icon :: icon(title='Изменить', icon='/images/edit-icon.png', url='/user/schedule/edit/' + ${schedule.id})}" />
-
-        <form th:action="@{/user/schedule/delete/{scheduleId}(scheduleId=${schedule.id})}"
-              th:method="DELETE" style="display:inline;"
-              onsubmit="return confirm('Are you sure you want to delete this schedule?');">
-            <input type="hidden" name="_method" value="DELETE">
-            <button type="submit" style="border: none; background: none;" th:title="Удалить">
-                <img th:src="@{/images/delete-icon.png}" alt="Delete" style="width: 50px; height: 50px; margin-bottom: 10px;  background-color: transparent;">
-            </button>
-        </form>
+        <div th:if="${schedule.name != 'main'}">
+            <div th:replace="~{user/fragments/icons/icon :: icon(title='Изменить', icon='/images/edit-icon.png', url='/user/schedule/edit/' + ${schedule.id})}"></div>
+        </div>
+        <div th:if="${schedule.name != 'main'}">
+            <form th:action="@{/user/schedule/delete/{scheduleId}(scheduleId=${schedule.id})}"
+                  th:method="DELETE" style="display:inline;"
+                  onsubmit="return confirm('Are you sure you want to delete this schedule?');">
+                <input type="hidden" name="_method" value="DELETE">
+                <button type="submit" style="border: none; background: none;" th:title="Удалить">
+                    <img th:src="@{/images/delete-icon.png}" alt="Delete" style="width: 50px; height: 50px; margin-bottom: 10px;  background-color: transparent;">
+                </button>
+            </form>
+        </div>
     </div>
 
     <div th:replace="~{user/fragments/task-table :: taskTable(${schedule})}"></div>
