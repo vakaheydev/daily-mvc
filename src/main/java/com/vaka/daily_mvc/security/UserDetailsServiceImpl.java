@@ -1,4 +1,4 @@
-package com.vaka.daily_mvc.security.config;
+package com.vaka.daily_mvc.security;
 
 import com.vaka.daily_client.exception.UserNotFoundException;
 import com.vaka.daily_client.model.User;
