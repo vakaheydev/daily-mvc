@@ -2,6 +2,7 @@ package com.vaka.daily_mvc.controller;
 
 import com.vaka.daily_client.model.UserTypes;
 import com.vaka.daily_mvc.service.authorization.AuthorizationService;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.CookieValue;
@@ -18,7 +19,9 @@ public class HomeController {
     }
 
     @GetMapping
-    public String getHome(@CookieValue(value = "username", required = false) String username, Model model) {
+    public String getHome(Model model) {
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+
         if (service.existsUser(username)) {
             model.addAttribute("username", username);
         }

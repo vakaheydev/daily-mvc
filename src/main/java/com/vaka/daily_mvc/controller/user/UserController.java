@@ -7,7 +7,11 @@ import com.vaka.daily_client.model.Task;
 import com.vaka.daily_mvc.service.UserService;
 import com.vaka.daily_client.model.User;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.catalina.security.SecurityConfig;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -27,11 +31,10 @@ public class UserController {
     }
 
     @GetMapping("/start")
-    public String getStart(@RequestParam(required = false, name = "scheduleId") Integer scheduleId, @CookieValue(value = "username", defaultValue = "") String username, Model model) {
-        if (username.equals(" ")) {
-            return "redirect:authorization/login";
-        }
-
+    public String getStart(@RequestParam(required = false, name = "scheduleId") Integer scheduleId, Model model) {
+        SecurityContext securityCtx = SecurityContextHolder.getContext();
+        Authentication authentication = securityCtx.getAuthentication();
+        String username = authentication.getName();
         User user = userService.getByUniqueName(username);
 
         Schedule schedule;
@@ -68,12 +71,5 @@ public class UserController {
         model.addAttribute("completed", completedTask);
 
         return "user/start";
-    }
-
-    @ExceptionHandler(UserNotFoundException.class)
-    public String handleUserNotFoundException(UserNotFoundException e) {
-        log.error("User not found: {}", e.getMessage());
-
-        return "redirect:/start";
     }
 }
