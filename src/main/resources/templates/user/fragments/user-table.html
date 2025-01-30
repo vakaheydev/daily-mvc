@@ -4,24 +4,34 @@
 <body>
 <div th:fragment="userTable(user, completed, uncompleted)">
     <style>
+        body {
+            background-color: #333333;
+        }
+
         select {
             padding: 10px;
             font-size: 16px;
-            background-color: #f2f2f2;
+            background-color: #343a40;
             border: 2px solid #ddd;
             border-radius: 4px;
             width: 200px;
             cursor: pointer;
             transition: all 0.3s ease;
+            color: white;
         }
 
         select:focus {
-            border-color: #4CAF50;
+            border-color: #000000;
             background-color: #fff;
+            color: black;
         }
 
         option {
             padding: 10px;
+        }
+
+        h2 {
+            color: white;
         }
     </style>
 
@@ -53,62 +63,7 @@
             </form>
         </div>
     </div>
-
-    <!-- Модальное окно для каждой задачи -->
-    <div id="deleteModal" class="modal">
-        <div class="mod-content">
-            <span class="close" id="closeModal">&times;</span>
-            <h2>Delete this task?</h2>
-            <div>
-                <button id="confirmDelete" class="confirmDelete">Yes</button>
-                <button id="cancelDelete" class="cancelDelete">No</button>
-            </div>
-        </div>
-    </div>
-
     <div th:replace="~{user/fragments/task-table :: taskTable(completed=${completed}, uncompleted=${uncompleted})}"></div>
 </div>
-
-<script th:fragment="scheduleDeleteBtnScript">
-    var modal = document.getElementById("deleteModal");
-    var span = document.getElementById("closeModal");
-    var confirmButton = document.getElementById("confirmDelete");
-    var cancelButton = document.getElementById("cancelDelete");
-    var form = document.getElementById("deleteForm");
-
-    // Универсальный обработчик для всех кнопок удаления
-    document.addEventListener('click', function(event) {
-        if (event.target && event.target.classList.contains('deleteButton')) {
-            var taskId = event.target.getAttribute('data-id');  // Получаем id задачи
-            console.log("Task id: " + taskId)
-            console.log("Target: " + event.target)
-            modal.style.display = "block";  // Показываем модальное окно
-
-            // При клике на кнопку "Yes", отправляем форму
-            confirmButton.onclick = function() {
-                form.action = '/user/task/delete/' + taskId; // Устанавливаем правильный action
-                form.submit();  // Отправляем форму
-            }
-        }
-    });
-
-    // При клике на <span> (крестик), закрыть окно
-    span.onclick = function() {
-        modal.style.display = "none";
-    }
-
-    // При клике на кнопку "No", закрываем окно
-    cancelButton.onclick = function() {
-        modal.style.display = "none";
-    }
-
-    // Закрытие модального окна при клике вне его
-    window.onclick = function(event) {
-        if (event.target == modal) {
-            modal.style.display = "none";
-        }
-    }
-</script>
-
 </body>
 </html>

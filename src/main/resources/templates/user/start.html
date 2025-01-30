@@ -9,10 +9,31 @@
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
           rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.5/font/bootstrap-icons.min.css">
+
+    <style>
+        table tbody tr:hover {
+            background-color: #282d31;
+        }
+        .table-dark.table-striped tbody tr:nth-of-type(odd):hover {
+            background-color: #282d31;
+        }
+
+        h1 {
+            color: white;
+        }
+
+        .greet-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+    </style>
 </head>
 <body>
 <div class="container mt-5">
-    <h1 class="mb-4" th:text="|Hello, ${user.login}! Your ${schedule.name} schedule|">Greeting</h1>
+    <div class="greet-container">
+        <h1 class="mb-4" th:text="|Hello, ${user.login}! Your ${schedule.name} schedule|">Greeting</h1>
+    </div>
     <div th:replace="~{user/fragments/user-table :: userTable(user=${user}, completed=${completed}, uncompleted=${uncompleted})}"></div>
     <a th:href="@{/}" class="btn btn-primary" style="margin-bottom: 10px;">Back</a>
     <form th:action="@{/authorization/logout}" method="post">
@@ -21,7 +42,6 @@
 </div>
 <!-- Подключение Bootstrap JS и jQuery -->
 <div th:replace="~{user/fragments/task-btns :: taskBtnScript}"></div>
-<div th:replace="~{user/fragments/user-table :: scheduleDeleteBtnScript}"></div>
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>

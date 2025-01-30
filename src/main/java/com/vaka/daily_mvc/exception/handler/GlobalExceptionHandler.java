@@ -59,7 +59,15 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(RuntimeException.class)
     public String handle(RuntimeException ex, Model model) {
         log.error("Runtime exception", ex);
-        model.addAttribute("errorMsg", ex.getMessage());
+
+        String msg = ex.getMessage();
+
+        if (ex.getMessage().startsWith("Data integrity error")) {
+            msg = "Already exists";
+        }
+
+
+        model.addAttribute("errorMsg", msg);
         model.addAttribute("errorName", "Error");
 
         return "error/defaultError";

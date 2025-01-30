@@ -1,5 +1,6 @@
 package com.vaka.daily_mvc.controller;
 
+import com.vaka.daily_client.model.UserTypes;
 import com.vaka.daily_mvc.service.authorization.AuthorizationService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -21,6 +22,13 @@ public class HomeController {
         if (service.existsUser(username)) {
             model.addAttribute("username", username);
         }
+
+        boolean isAdmin = false;
+        if (service.hasRole(username, UserTypes.ADMIN)) {
+            isAdmin = true;
+        }
+
+        model.addAttribute("isAdmin", isAdmin);
 
         return "index";
     }
