@@ -7,16 +7,11 @@
 - **Управление задачами**: Добавление, редактирование, просмотр и удаление задач.
 - **Планирование задач**: Привязка сроков и напоминаний к задачам.
 - **Операции CRUD**: Создание, чтение, обновление и удаление сущностей.
-- **Клиент**: Для управления данными, сайт взаимодействует с [REST_API](https://github.com/vakaheydev/daily-rest-api) с помощью [Клиента](https://github.com/vakaheydev/daily-rest-client)
+- **Клиент**: Для управления данными, сайт взаимодействует с [REST API](https://github.com/vakaheydev/daily-rest-api) с помощью [Клиента](https://github.com/vakaheydev/daily-rest-client)
 
 ## Установка
 
 Проект контейнеризован с использованием Docker, что позволяет быстро и удобно осуществить запуск всех сервисов (REST API, MVC, Telegram-бот) локально.
-
-## API Endpoints
-
-Вы можете взаимодействовать с REST API через представленные ниже эндпоинты.  
-Корневой URL: /api
 
 ### Требования
 
@@ -27,7 +22,7 @@
 
 Чтобы запустить все сервисы (REST API, клиент, MVC и Telegram-бот), выполните следующие команды:
 
-Перейдите в папку с докером в [REST_API](https://github.com/vakaheydev/daily-rest-api):
+Перейдите в папку с докером в [REST API](https://github.com/vakaheydev/daily-rest-api):
 ```sh
 cd ./docker
 ```
