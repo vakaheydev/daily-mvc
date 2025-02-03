@@ -26,6 +26,7 @@ public class WebConfig implements WebMvcConfigurer {
     public void addViewControllers(ViewControllerRegistry registry) {
         registry.addRedirectViewController("/", "/home");
         registry.addRedirectViewController("/user", "/user/start");
+        registry.addViewController("/accessDenied").setViewName("/error/accessDenied");
     }
 
     @Override

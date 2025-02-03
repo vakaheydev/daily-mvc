@@ -3,12 +3,12 @@ package com.vaka.daily_mvc.security;
 import com.vaka.daily_client.exception.UserNotFoundException;
 import com.vaka.daily_client.model.User;
 import com.vaka.daily_mvc.service.UserService;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
+import java.util.List;
 
 public class UserDetailsServiceImpl implements UserDetailsService {
     UserService userService;
@@ -27,7 +27,9 @@ public class UserDetailsServiceImpl implements UserDetailsService {
             throw new UsernameNotFoundException(String.format("User with username %s wasn't found", username));
         }
 
+        String role = "ROLE_" + user.getUserType().getName().toUpperCase();
+
         return new org.springframework.security.core.userdetails.User(user.getLogin(), user.getPassword(),
-                new ArrayList<>());
+                List.of(new SimpleGrantedAuthority(role)));
     }
 }

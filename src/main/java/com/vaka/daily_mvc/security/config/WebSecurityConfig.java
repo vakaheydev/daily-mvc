@@ -27,6 +27,7 @@ public class WebSecurityConfig {
         return http
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/", "/home").permitAll()
+                        .requestMatchers("/admin/**").hasAnyRole("ADMIN", "DEVELOPER")
                         .anyRequest().authenticated()
                 )
                 .httpBasic(Customizer.withDefaults())
@@ -37,6 +38,8 @@ public class WebSecurityConfig {
                 .logout(logout -> logout
                         .logoutSuccessUrl("/login?logout")
                         .permitAll())
+                .exceptionHandling(conf -> conf
+                        .accessDeniedPage("/accessDenied"))
                 .build();
     }
 
