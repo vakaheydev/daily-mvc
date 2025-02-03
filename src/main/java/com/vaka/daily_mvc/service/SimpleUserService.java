@@ -5,6 +5,8 @@ import com.vaka.daily_client.client.blocked.UserClient;
 import com.vaka.daily_client.model.Schedule;
 import com.vaka.daily_client.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -12,10 +14,12 @@ import java.util.List;
 @Service
 public class SimpleUserService extends AbstractService<User> implements UserService {
     UserClient userClient;
+    PasswordEncoder encoder;
 
     @Autowired
-    public SimpleUserService(UserClient userClient) {
+    public SimpleUserService(UserClient userClient, @Lazy PasswordEncoder encoder) {
         this.userClient = userClient;
+        this.encoder = encoder;
     }
 
     @Override
@@ -50,6 +54,12 @@ public class SimpleUserService extends AbstractService<User> implements UserServ
         }
 
         return super.updateById(id, entity);
+    }
+
+    @Override
+    public User create(User entity) {
+        entity.setPassword(encoder.encode(entity.getPassword()));
+        return super.create(entity);
     }
 
     @Override
