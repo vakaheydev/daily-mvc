@@ -42,13 +42,13 @@ public class RegistrationController {
     public String showForm(Model model) {
         model.addAttribute("userForm", new UserRegistrationForm());
 
-        return "/registration";
+        return "registration";
     }
 
     @PostMapping
     public String postForm(@Valid UserRegistrationForm userForm, BindingResult bindingResult, HttpServletRequest request, HttpServletResponse response) {
         if (bindingResult.hasErrors()) {
-            return "/registration";
+            return "registration";
         }
 
         User user = User.builder()
