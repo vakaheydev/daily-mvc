@@ -36,7 +36,7 @@
     </div>
     <div th:replace="~{user/fragments/user-table :: userTable(user=${user}, completed=${completed}, uncompleted=${uncompleted})}"></div>
     <a th:href="@{/}" class="btn btn-primary" style="margin-bottom: 10px;">Back</a>
-    <form th:action="@{/authorization/logout}" method="post">
+    <form th:action="@{/logout}" method="post">
         <button type="submit" class="btn btn-primary">Logout</button>
     </form>
 </div>
