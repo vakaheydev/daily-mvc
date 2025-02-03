@@ -26,7 +26,7 @@
 </head>
 <body>
 <div class="center-content">
-    <h3 sec:authorize="isAuthenticated()" sec:authentication="name"></h3>
+    <h3 sec:authorize="isAuthenticated()">Hello, <span sec:authentication="name"></span></h3>
     <h1 class="h1">Vaka Daily</h1>
     <a href="/start" class="btn btn-primary" style="margin-bottom: 10px;">Start</a>
     <a sec:authorize="hasAnyRole('ROLE_ADMIN', 'ROLE_DEVELOPER')" href="/admin" class="btn btn-primary">Admin</a>
