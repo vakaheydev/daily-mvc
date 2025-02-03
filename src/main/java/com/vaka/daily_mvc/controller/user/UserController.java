@@ -6,12 +6,16 @@ import com.vaka.daily_client.model.Schedule;
 import com.vaka.daily_client.model.Task;
 import com.vaka.daily_mvc.service.UserService;
 import com.vaka.daily_client.model.User;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.catalina.security.SecurityConfig;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AuthenticationCredentialsNotFoundException;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -31,11 +35,19 @@ public class UserController {
     }
 
     @GetMapping("/start")
-    public String getStart(@RequestParam(required = false, name = "scheduleId") Integer scheduleId, Model model) {
+    public String getStart(@RequestParam(required = false, name = "scheduleId") Integer scheduleId, Model model, HttpServletRequest request, HttpServletResponse response) {
         SecurityContext securityCtx = SecurityContextHolder.getContext();
         Authentication authentication = securityCtx.getAuthentication();
         String username = authentication.getName();
-        User user = userService.getByUniqueName(username);
+
+        User user;
+
+        try {
+            user = userService.getByUniqueName(username);
+        } catch (UserNotFoundException ex) {
+            new SecurityContextLogoutHandler().logout(request, response, authentication);
+            return "redirect:/login?logout";
+        }
 
         Schedule schedule;
 
