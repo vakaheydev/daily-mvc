@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+<body>
+<div th:fragment="scheduleTable(schedule)">
+    <table class="table table-dark table-striped table-bordered">
+        <thead class="thead-dark">
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>User Login</th>
+            <th>Tasks</th>
+        </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>
+                    <a th:href="@{/admin/schedule/{id}(id=${schedule.id})}"
+                       class="text-decoration-none">
+                        <p th:text="${schedule.id}"></p>
+                    </a>
+
+                    <a th:href="@{/admin/schedule/edit/{scheduleId}(scheduleId=${schedule.id})}"
+                       class="btn btn-primary btn-sm">
+                        Edit
+                    </a>
+
+                    <form th:action="@{/admin/schedule/delete/{scheduleId}(scheduleId=${schedule.id})}"
+                          th:method="DELETE" style="display:inline;"
+                          onsubmit="return confirm('Are you sure you want to delete this schedule?');">
+                        <input type="hidden" name="_method" value="DELETE">
+                        <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                    </form>
+                </td>
+                <td th:text="${schedule.name}"></td>
+                <td>
+                    <a th:href="@{/admin/user/search(login=${schedule.user.login})}"
+                       th:text="${schedule.user.login}"></a>
+                </td>
+                <td>
+                    <!-- Task table -->
+                    <div th:replace="~{admin/fragments/task/all-task-table :: taskTable(${schedule.tasks})}"></div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>

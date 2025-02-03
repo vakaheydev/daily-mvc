@@ -26,10 +26,10 @@
 </head>
 <body>
 <div class="center-content">
-    <h3 th:if="${username}" th:text="|Hello, ${username}!|"></h3>
+    <h3 sec:authorize="isAuthenticated()" sec:authentication="name"></h3>
     <h1 class="h1">Vaka Daily</h1>
-    <a href="/start" class="btn btn-primary">Start</a>
-    <a href="/admin" class="btn btn-primary">Admin</a>
+    <a href="/start" class="btn btn-primary" style="margin-bottom: 10px;">Start</a>
+    <a sec:authorize="hasAnyRole('ROLE_ADMIN', 'ROLE_DEVELOPER')" href="/admin" class="btn btn-primary">Admin</a>
 </div>
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>

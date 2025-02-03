@@ -28,7 +28,7 @@ public class ScheduleController {
         Schedule schedule = scheduleService.getById(id);
         model.addAttribute("schedule", schedule);
 
-        return "/user/schedule/byId";
+        return "user/schedule/byId";
     }
 
     @GetMapping("/edit/{id}")
@@ -37,7 +37,7 @@ public class ScheduleController {
         model.addAttribute("schedule", schedule);
         model.addAttribute("dbSchedule", schedule);
 
-        return "/user/schedule/edit";
+        return "user/schedule/edit";
     }
 
     @PutMapping("/edit/{id}")
@@ -47,7 +47,7 @@ public class ScheduleController {
         entity.setTasks(dbSchedule.getTasks());
         scheduleService.updateById(id, entity);
 
-        return "redirect:/user/start";
+        return "redirect:/user/start?scheduleId=" + entity.getId();
     }
 
     @GetMapping("/new")
@@ -55,16 +55,16 @@ public class ScheduleController {
         model.addAttribute("schedule", new Schedule());
         model.addAttribute("userId", userId);
 
-        return "/user/schedule/new";
+        return "user/schedule/new";
     }
 
     @PostMapping("/new")
     public String post(@ModelAttribute("userId") Integer userId, Schedule entity) {
         User user = userService.getById(userId);
         entity.setUser(user);
-        scheduleService.create(entity);
+        Schedule created = scheduleService.create(entity);
 
-        return "redirect:/user/start";
+        return "redirect:/user/start?scheduleId=" + created.getId();
     }
 
     @DeleteMapping("/delete/{id}")
@@ -72,7 +72,7 @@ public class ScheduleController {
         List<Task> tasks = scheduleService.getById(id).getTasks();
 
         if (!tasks.isEmpty()) {
-            throw new RuntimeException(tasks.size() + " tasks have this schedule");
+            throw new RuntimeException("This schedule has " + tasks.size() + " tasks. Delete them first");
         }
 
         scheduleService.deleteById(id);

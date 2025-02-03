@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+<body>
+<div th:fragment="taskTable(task)">
+    <table class="table table-dark table-striped table-bordered">
+        <thead class="thead-dark">
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Description</th>
+            <th>Deadline</th>
+            <th>Status</th>
+            <th>Type</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>
+                <a th:href="@{/admin/task/{id}(id=${task.id})}"
+                   class="text-decoration-none">
+                    <p th:text="${task.id}"></p>
+                </a>
+            </td>
+            <td th:text="${task.name}"></td>
+            <td th:text="${task.description}"></td>
+            <td th:text="${#temporals.format(task.deadline, 'E, dd MMM yyyy HH:mm')}"></td>
+            <td th:text="${task.status}? 'Done' : 'Not done'"></td>
+            <td th:text="${task.taskType.name}"></td>
+            <td>
+                <a
+                        th:href="@{/admin/task/edit/{taskId}(taskId=${task.id})}"
+                        class="btn btn-primary btn-sm">
+                    Edit
+                </a>
+                <form th:action="@{/admin/task/delete/{taskId}(taskId=${task.id})}"
+                      th:method="DELETE" style="display:inline;"
+                      onsubmit="return confirm('Are you sure you want to delete this task?');">
+                    <input type="hidden" name="_method" value="DELETE">
+                    <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                </form>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>

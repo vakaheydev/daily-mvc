@@ -1,10 +1,9 @@
 package com.vaka.daily_mvc.controller.admin;
 
+import com.vaka.daily_client.model.Schedule;
 import com.vaka.daily_client.model.Task;
 import com.vaka.daily_client.model.User;
-import com.vaka.daily_mvc.model.dto.ScheduleDto;
 import com.vaka.daily_mvc.service.ScheduleService;
-import com.vaka.daily_client.model.Schedule;
 import com.vaka.daily_mvc.service.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
@@ -28,17 +27,15 @@ public class AdminScheduleController {
 
     @GetMapping
     public String get(Model model) {
-        List<ScheduleDto> scheduleDtos = scheduleService.getAll().stream()
-                .map(scheduleService::toDto)
-                .toList();
+        List<Schedule> schedules = scheduleService.getAll().stream().toList();
 
-        model.addAttribute("schedules", scheduleDtos);
+        model.addAttribute("schedules", schedules);
         return "admin/schedule/index";
     }
 
     @GetMapping("/{id}")
     public String getById(@PathVariable("id") Integer id, Model model) {
-        ScheduleDto schedule = scheduleService.toDto(scheduleService.getById(id));
+        Schedule schedule = scheduleService.getById(id);
 
         model.addAttribute("schedule", schedule);
         return "admin/schedule/byId";
