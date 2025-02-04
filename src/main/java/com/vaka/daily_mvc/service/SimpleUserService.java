@@ -2,6 +2,7 @@ package com.vaka.daily_mvc.service;
 
 import com.vaka.daily_client.client.Client;
 import com.vaka.daily_client.client.blocked.UserClient;
+import com.vaka.daily_client.exception.UserNotFoundException;
 import com.vaka.daily_client.model.Schedule;
 import com.vaka.daily_client.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,6 +37,16 @@ public class SimpleUserService extends AbstractService<User> implements UserServ
         setUserToSchedules(user.getSchedules(), user);
 
         return user;
+    }
+
+    @Override
+    public boolean existsByUsername(String username) {
+        try {
+            userClient.getByUniqueName(username);
+            return true;
+        } catch (UserNotFoundException ignored) {
+            return false;
+        }
     }
 
     @Override
