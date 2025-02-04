@@ -6,4 +6,5 @@ import java.util.List;
 
 public interface UserService extends CommonService<User> {
     List<User> getByUserTypeName(String userTypeName);
+    boolean existsByUsername(String username);
 }
