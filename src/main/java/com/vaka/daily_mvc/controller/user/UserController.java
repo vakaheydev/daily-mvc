@@ -81,6 +81,7 @@ public class UserController {
 
         model.addAttribute("uncompleted", uncompletedTask);
         model.addAttribute("completed", completedTask);
+        model.addAttribute("tgId", user.getTelegramId());
 
         return "user/start";
     }

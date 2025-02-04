@@ -72,16 +72,22 @@ public class LoginController {
             return "loginTgId";
         }
 
-//        SecurityContextHolderStrategy securityContextHolderStrategy = SecurityContextHolder.getContextHolderStrategy();
-//        SecurityContext ctx = securityContextHolderStrategy.createEmptyContext();
-//        ctx.setAuthentication(authResp);
-//
-//        securityContextRepository.saveContext(ctx, request, response);
-
         User user = userService.getByUniqueName(username);
         user.setTelegramId(telegramId);
         userService.updateById(user.getId(), user);
 
         return "loginTgIdSuccess";
+    }
+
+    @DeleteMapping("/login/{tgId}")
+    public String unbindTgId() {
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        User user = userService.getByUniqueName(username);
+        user.setTelegramId(null);
+
+        userService.updateById(user.getId(), user);
+
+
+        return "redirect:/start";
     }
 }
