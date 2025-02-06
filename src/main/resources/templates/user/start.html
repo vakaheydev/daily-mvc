@@ -36,11 +36,11 @@
     </div>
 
     <div th:if="${tgId == null}">
-        <a class="btn btn-primary" style="margin-bottom: 10px;" th:href="@{https://t.me/vaka_daily_bot?start=login}" th:attr="target=_blank">Bind telegram</a>
+        <a class="btn btn-primary" style="margin-bottom: 10px;" th:href="@{/user/tg/bind}">Bind telegram</a>
     </div>
 
     <div th:if="${tgId != null}">
-        <form th:action="@{/login/{tgId}(tgId=${tgId})}" th:method="DELETE">
+        <form th:action="@{/user/tg/bind}" th:method="DELETE">
             <button type="submit" style="margin-bottom: 10px;" class="btn btn-danger">Unbind telegram</button>
         </form>
     </div>

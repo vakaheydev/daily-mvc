@@ -7,11 +7,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class SimpleUserTypeService extends AbstractService<UserType> implements UserTypeService {
+public class UserTypeServiceImpl extends AbstractService<UserType> implements UserTypeService {
     UserTypeClient userTypeClient;
 
     @Autowired
-    public SimpleUserTypeService(UserTypeClient userTypeClient) {
+    public UserTypeServiceImpl(UserTypeClient userTypeClient) {
         this.userTypeClient = userTypeClient;
     }
 
