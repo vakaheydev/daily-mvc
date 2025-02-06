@@ -6,10 +6,10 @@ import com.vaka.daily_client.model.Schedule;
 import org.springframework.stereotype.Service;
 
 @Service
-public class SimpleScheduleService extends AbstractService<Schedule> implements ScheduleService {
+public class ScheduleServiceImpl extends AbstractService<Schedule> implements ScheduleService {
     ScheduleClient client;
 
-    public SimpleScheduleService(ScheduleClient client) {
+    public ScheduleServiceImpl(ScheduleClient client) {
         this.client = client;
     }
 

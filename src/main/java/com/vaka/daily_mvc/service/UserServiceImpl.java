@@ -13,12 +13,12 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class SimpleUserService extends AbstractService<User> implements UserService {
+public class UserServiceImpl extends AbstractService<User> implements UserService {
     UserClient userClient;
     PasswordEncoder encoder;
 
     @Autowired
-    public SimpleUserService(UserClient userClient, @Lazy PasswordEncoder encoder) {
+    public UserServiceImpl(UserClient userClient, @Lazy PasswordEncoder encoder) {
         this.userClient = userClient;
         this.encoder = encoder;
     }
