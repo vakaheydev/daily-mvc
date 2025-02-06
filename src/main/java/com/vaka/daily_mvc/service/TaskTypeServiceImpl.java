@@ -6,10 +6,10 @@ import com.vaka.daily_client.model.TaskType;
 import org.springframework.stereotype.Service;
 
 @Service
-public class SimpleTaskTypeService extends AbstractService<TaskType> implements TaskTypeService {
+public class TaskTypeServiceImpl extends AbstractService<TaskType> implements TaskTypeService {
     TaskTypeClient client;
 
-    public SimpleTaskTypeService(TaskTypeClient client) {
+    public TaskTypeServiceImpl(TaskTypeClient client) {
         this.client = client;
     }
 
