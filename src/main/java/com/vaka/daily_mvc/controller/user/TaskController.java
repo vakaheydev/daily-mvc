@@ -1,7 +1,9 @@
 package com.vaka.daily_mvc.controller.user;
 
+import com.vaka.daily_client.model.Schedule;
 import com.vaka.daily_client.model.TaskType;
 import com.vaka.daily_mvc.model.dto.TaskDto;
+import com.vaka.daily_mvc.service.ScheduleService;
 import com.vaka.daily_mvc.service.TaskService;
 import com.vaka.daily_client.model.Task;
 import com.vaka.daily_mvc.service.TaskTypeService;
@@ -19,12 +21,14 @@ import java.util.List;
 @Slf4j
 @SessionAttributes("scheduleId")
 public class TaskController {
-    TaskService taskService;
-    TaskTypeService taskTypeService;
+    private final TaskService taskService;
+    private final TaskTypeService taskTypeService;
+    private final ScheduleService scheduleService;
 
-    public TaskController(TaskService taskService, TaskTypeService taskTypeService) {
+    public TaskController(TaskService taskService, TaskTypeService taskTypeService, ScheduleService scheduleService) {
         this.taskService = taskService;
         this.taskTypeService = taskTypeService;
+        this.scheduleService = scheduleService;
     }
 
     @GetMapping("/add")
@@ -50,6 +54,8 @@ public class TaskController {
         task.setStatus(false);
 
         Integer scheduleId = (Integer) model.getAttribute("scheduleId");
+
+        Schedule schedule = scheduleService.getById(scheduleId); // TODO: 2/11/2025 Check if specified schedule user is current authenticated user
 
         task.setScheduleId(scheduleId);
         taskService.create(task);
