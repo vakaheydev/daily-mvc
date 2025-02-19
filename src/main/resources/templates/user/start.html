@@ -27,14 +27,17 @@
             justify-content: center;
             align-items: center;
         }
+
+        .header-btns {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
     </style>
 </head>
 <body>
 <div class="container mt-5">
-    <div class="greet-container">
-        <h1 class="mb-4" th:text="|Hello, ${user.login}! Your ${schedule.name} schedule|">Greeting</h1>
-    </div>
-
     <div th:if="${tgId == null}">
         <a class="btn btn-primary" style="margin-bottom: 10px;" th:href="@{/user/tg/bind}">Bind telegram</a>
     </div>
@@ -44,6 +47,12 @@
             <button type="submit" style="margin-bottom: 10px;" class="btn btn-danger">Unbind telegram</button>
         </form>
     </div>
+    <div class="header-btns">
+        <div class="greet-container">
+            <h1 class="mb-4" th:text="|Hello, ${user.login}! Your ${schedule.name} schedule|">Greeting</h1>
+        </div>
+    </div>
+
 
     <div th:replace="~{user/fragments/user-table :: userTable(user=${user}, completed=${completed}, uncompleted=${uncompleted})}"></div>
     <a th:href="@{/}" class="btn btn-primary" style="margin-bottom: 10px;">Back</a>
