@@ -1,11 +1,13 @@
 package com.vaka.daily_mvc.exception.handler;
 
+import com.vaka.daily_client.exception.DuplicateEntityException;
 import com.vaka.daily_client.exception.ServerNotRespondingException;
 import com.vaka.daily_mvc.exception.ServerIsNotAliveException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpStatus;
 import org.springframework.ui.Model;
+import org.springframework.util.StringUtils;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -32,10 +34,8 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public String handle(MethodArgumentNotValidException ex, Model model) {
         log.error("Argument mismatch", ex);
-        model.addAttribute("errorMsg", "Argument mismatch: " + ex.getFieldError());
-        model.addAttribute("errorName", "MethodArgumentNotValidException");
 
-        return "error/defaultError";
+        return "error/unexpectedError";
     }
 
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
@@ -50,7 +50,17 @@ public class GlobalExceptionHandler {
     public String handle(HttpRequestMethodNotSupportedException ex, Model model) {
         log.error("Incorrect HTTP method", ex);
         model.addAttribute("errorMsg", "Method not allowed: " + ex.getMethod());
-        model.addAttribute("errorName", "HttpRequestMethodNotSupportedException");
+        model.addAttribute("errorName", "Incorrect HTTP method");
+
+        return "error/defaultError";
+    }
+
+    @ResponseStatus(HttpStatus.CONFLICT)
+    @ExceptionHandler(DuplicateEntityException.class)
+    public String handle(DuplicateEntityException ex, Model model) {
+        log.error("Duplicate entity: {}", ex.getMessage());
+        model.addAttribute("errorMsg", String.format("%s with such attributes already exists", StringUtils.capitalize(ex.getObjectType())));
+        model.addAttribute("errorName", "Duplicate error");
 
         return "error/defaultError";
     }
@@ -60,13 +70,7 @@ public class GlobalExceptionHandler {
     public String handle(RuntimeException ex, Model model) {
         log.error("Runtime exception", ex);
 
-        String msg = "Something went wrong. Please return back and try again";
-
-//        if (ex.getMessage().startsWith("Data integrity error")) {
-//            msg = "Already exists";
-//        }
-
-        model.addAttribute("errorMsg", msg);
+        model.addAttribute("errorMsg", "Something went wrong. Please return back and try again");
         model.addAttribute("errorName", "Error");
 
         return "error/defaultError";

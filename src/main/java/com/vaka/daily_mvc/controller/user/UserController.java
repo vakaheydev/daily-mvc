@@ -1,27 +1,24 @@
 package com.vaka.daily_mvc.controller.user;
 
-import com.vaka.daily_client.exception.ScheduleNotFoundException;
-import com.vaka.daily_client.exception.UserNotFoundException;
+import com.vaka.daily_client.exception.notfound.ScheduleNotFoundException;
+import com.vaka.daily_client.exception.notfound.UserNotFoundException;
 import com.vaka.daily_client.model.Schedule;
 import com.vaka.daily_client.model.Task;
-import com.vaka.daily_mvc.service.UserService;
 import com.vaka.daily_client.model.User;
+import com.vaka.daily_mvc.service.UserService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.catalina.security.SecurityConfig;
-import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.ApplicationContextAware;
-import org.springframework.security.authentication.AuthenticationCredentialsNotFoundException;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.Comparator;
 import java.util.List;
@@ -38,7 +35,8 @@ public class UserController {
     }
 
     @GetMapping("/start")
-    public String getStart(@RequestParam(required = false, name = "scheduleId") Integer scheduleId, Model model, HttpServletRequest request, HttpServletResponse response) {
+    public String getStart(@RequestParam(required = false, name = "scheduleId") Integer scheduleId, Model model,
+                           HttpServletRequest request, HttpServletResponse response) {
         SecurityContext securityCtx = SecurityContextHolder.getContext();
         Authentication authentication = securityCtx.getAuthentication();
         String username = authentication.getName();
@@ -58,12 +56,12 @@ public class UserController {
             schedule = user.getSchedules().stream()
                     .filter(x -> x.getName().equals("main"))
                     .findFirst()
-                    .orElseThrow(() -> new ScheduleNotFoundException("main"));
+                    .orElseThrow(() -> new ScheduleNotFoundException("name", "main"));
         } else {
             schedule = user.getSchedules().stream()
                     .filter(x -> x.getId().equals(scheduleId))
                     .findFirst()
-                    .orElseThrow(() -> new ScheduleNotFoundException(scheduleId));
+                    .orElseThrow(() -> new ScheduleNotFoundException("id", scheduleId));
         }
 
         schedule.setTasks(schedule.getTasks().stream()

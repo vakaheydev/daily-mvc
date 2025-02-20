@@ -1,7 +1,7 @@
 package com.vaka.daily_mvc.service.authorization;
 
 import com.vaka.daily_client.client.blocked.UserClient;
-import com.vaka.daily_client.exception.UserNotFoundException;
+import com.vaka.daily_client.exception.notfound.UserNotFoundException;
 import com.vaka.daily_client.model.User;
 import com.vaka.daily_client.model.UserTypes;
 import org.springframework.beans.factory.annotation.Autowired;

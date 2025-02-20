@@ -1,6 +1,6 @@
 package com.vaka.daily_mvc.security;
 
-import com.vaka.daily_client.exception.UserNotFoundException;
+import com.vaka.daily_client.exception.notfound.UserNotFoundException;
 import com.vaka.daily_client.model.User;
 import com.vaka.daily_mvc.service.UserService;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;

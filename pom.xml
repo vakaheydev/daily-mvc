@@ -13,7 +13,7 @@
 
     <spring.version>6.2.0</spring.version>
     <spring-boot.version>3.3.0</spring-boot.version>
-    <vaka.client>1.5-SNAPSHOT</vaka.client>
+    <vaka.client>1.6-SNAPSHOT</vaka.client>
   </properties>
 
   <repositories>
